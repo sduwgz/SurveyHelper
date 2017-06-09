@@ -39,8 +39,8 @@ public class Page extends JPanel{
 	public void setupUI(){
 		this.setLayout(new GridBagLayout());
 		this.setSize(200, 500);
-		this.add(title, new GBC(0,0,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(100, 0));
-		this.add(describe, new GBC(0,1,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(100, 0));
+		this.add(title, new GBC(0,0,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(1, 0));
+		this.add(describe, new GBC(0,1,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(1, 0));
 		int size = questionList.size();
 		quesPanel.setLayout(new GridBagLayout());
 		for(int i = 0; i < size; ++ i){

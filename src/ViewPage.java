@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 public class ViewPage extends JFrame{
 	public ArrayList<Page> pageList;
 	public String title;
+	JLabel info = new JLabel();
 	JButton confirm = new JButton("确认");
 	JButton back = new JButton("返回修改");
 	public ViewPage(ArrayList<Page> pageList, String title){

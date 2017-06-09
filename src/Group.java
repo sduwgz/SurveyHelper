@@ -25,9 +25,12 @@ public class Group extends JLabel{
 		this.setVisible(true);
 	}
 	public void active(){
-		this.setBackground(Color.GREEN);
+		this.setBackground(Color.YELLOW);
 	}
 	public void done(){
-		this.setBackground(Color.GRAY);
+		this.setBackground(Color.GREEN);
+	}
+	public void unreach(){
+		this.setBackground(Color.lightGray);
 	}
 }

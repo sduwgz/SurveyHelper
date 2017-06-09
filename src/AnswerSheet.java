@@ -2,6 +2,8 @@ import javax.swing.*;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -83,9 +85,12 @@ public class AnswerSheet extends JFrame{
 		}
 		pagePanel.add(endPage);
 		
+		groupPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 		groupPanel.setLayout(new GridLayout(1, groupList.size()));
 		int gsize = groupList.size();
 		for(int i = 0; i < gsize; ++ i){
+			groupList.get(i).setOpaque(true);
+			groupList.get(i).setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			groupPanel.add(groupList.get(i));
 		}
 		
@@ -93,11 +98,12 @@ public class AnswerSheet extends JFrame{
 		controlPanel.add(prePage);
 		controlPanel.add(confirm);
 		controlPanel.add(nextPage);
-		this.add(pagePanel, BorderLayout.CENTER);
-		this.add(groupPanel, BorderLayout.WEST);
-		this.add(controlPanel, BorderLayout.SOUTH);
+		this.setSize(1000, 800);
+		this.setLayout(new GridBagLayout());
+		this.add(groupPanel, new GBC(0, 0, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
+		this.add(pagePanel, new GBC(0, 1, 10, 9).setFill(GBC.BOTH).setWeight(1, 1));
+		this.add(controlPanel, new GBC(0, 10, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(500, 800);
 		this.setVisible(true);
 	}
 	public void setupListener(){
@@ -118,7 +124,7 @@ public class AnswerSheet extends JFrame{
 				try {
 					submitAll();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					// TODO Auto-generated catch block(done)
 					e1.printStackTrace();
 				}
 				clearAll();
@@ -127,18 +133,23 @@ public class AnswerSheet extends JFrame{
 		});
 		nextPage.addActionListener(new ActionListener() {
 			@Override
+			//TODO: the groupList will out of index. 
 			public void actionPerformed(ActionEvent e) {
 				int size = pageList.size();
 				if(curPage < size){
 					card.next(pagePanel);
 					curPage ++;
-					if(curPage == groupList.get(curGroup).endPage - 1){
-						groupList.get(curGroup++).done();
-						groupList.get(curGroup).active();
-				
+					for(int i = 0; i < groupList.size(); ++ i){
+						if(curPage > groupList.get(i).endPage)
+							groupList.get(i).done();
+						if(curPage >= groupList.get(i).startPage && curPage <= groupList.get(i).endPage)
+							groupList.get(i).active();
+						if(curPage < groupList.get(i).startPage)
+							groupList.get(i).unreach();
 					}
 				} else {
 					curPage = 0;
+					groupList.get(groupList.size() - 1).done();
 					card.next(pagePanel);
 				}
 				System.out.println(curPage);
@@ -150,9 +161,13 @@ public class AnswerSheet extends JFrame{
 				if(curPage > 0){
 					card.previous(pagePanel);
 					curPage --;
-					if(curPage == groupList.get(curGroup).startPage - 1){
-						groupList.get(curGroup--).done();
-						groupList.get(curGroup).active();
+					for(int i = 0; i < groupList.size(); ++ i){
+						if(curPage > groupList.get(i).endPage)
+							groupList.get(i).done();
+						if(curPage >= groupList.get(i).startPage && curPage <= groupList.get(i).endPage)
+							groupList.get(i).active();
+						if(curPage < groupList.get(i).startPage)
+							groupList.get(i).unreach();
 					}
 				}
 				System.out.println(curPage);
