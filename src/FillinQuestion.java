@@ -8,13 +8,13 @@ public class FillinQuestion extends Question{
 	JLabel jl;
 	JTextField jtf;
 	
-	public FillinQuestion(String quesDescribe) {
-		super(quesDescribe);
+	public FillinQuestion(int ID, String quesDescribe) {
+		super(ID, quesDescribe);
 		this.quesType = 1;
 		setupUI();
 	}
-	public FillinQuestion(String quesDescribe, String setString, String minRange, String maxRange) {
-		this(quesDescribe);
+	public FillinQuestion(int ID, String quesDescribe, String setString, String minRange, String maxRange) {
+		this(ID, quesDescribe);
 		if(setString.split(",").length > 1)
 			for(String s : setString.split(",")){
 				answerSet.add(s);
@@ -27,7 +27,7 @@ public class FillinQuestion extends Question{
 		}
 	}
 	public void setupUI(){
-		jl = new JLabel(quesDescribe, JLabel.CENTER);
+		jl = new JLabel(" " + ID +". " + quesDescribe, JLabel.CENTER);
 		jtf = new JTextField();
 		
 		this.setLayout(new GridLayout(1, 2));
@@ -47,6 +47,10 @@ public class FillinQuestion extends Question{
 		} else {
 			return false;
 		}
+	}
+	public void getFocus(){
+		System.out.println("Focus");
+		this.jtf.requestFocus(true);
 	}
 	public void clear(){
 		jtf.setText("");

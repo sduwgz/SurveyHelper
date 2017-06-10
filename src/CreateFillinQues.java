@@ -17,6 +17,8 @@ public class CreateFillinQues extends CreateQuestion{
 	JTextField maxField;
 	public CreateFillinQues(CreatePage belogedPage) {
 		super(belogedPage);
+		
+		
 		setupUI();
 		setupListener();
 	}
@@ -66,7 +68,8 @@ public class CreateFillinQues extends CreateQuestion{
 		confirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				question = new FillinQuestion(fill.getText(), setField.getText(), minField.getText(), maxField.getText());
+				question = new FillinQuestion(0, fill.getText(), setField.getText(), minField.getText(), maxField.getText());
+				question.ID = belogedPage.questionNumber;
 				addQuestiontoPage();
 				cancel();
 			}

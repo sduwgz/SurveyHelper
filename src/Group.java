@@ -20,6 +20,9 @@ public class Group extends JLabel{
 		this.endPage = Integer.parseInt(group.split("-")[2]);
 		setupUI();
 	}
+	public String getName(){
+		return this.name;
+	}
 	public void setupUI(){
 		this.setText(name);
 		this.setVisible(true);

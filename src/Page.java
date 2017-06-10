@@ -17,7 +17,7 @@ public class Page extends JPanel{
 	ArrayList<Question> questionList;
 	public Page(){
 		questionList = new ArrayList<Question>();
-		setupUI();
+		//setupUI();
 	}
 	public Page(ArrayList<Question> questionList){
 		this.questionList = questionList;
@@ -39,33 +39,33 @@ public class Page extends JPanel{
 	public void setupUI(){
 		this.setLayout(new GridBagLayout());
 		this.setSize(200, 500);
-		this.add(title, new GBC(0,0,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(1, 0));
-		this.add(describe, new GBC(0,1,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(1, 0));
+		this.add(title, new GBC(0,0,1,1).setFill(GBC.BOTH).setWeight(0.1, 0));
+		this.add(describe, new GBC(0,1,1,1).setFill(GBC.BOTH).setWeight(0.1, 0));
 		int size = questionList.size();
 		quesPanel.setLayout(new GridBagLayout());
 		for(int i = 0; i < size; ++ i){
-			quesPanel.add(questionList.get(i), new GBC(0,i,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(100, 0));
+			quesPanel.add(questionList.get(i), new GBC(0,i,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(0.1, 0));
 		}
 		remarkPanel.setLayout(new GridLayout(2, 1));
 		remarkPanel.add(remark);
 		remarkPanel.add(remarkContent);
-		this.add(quesPanel, new GBC(0,2,1,1).setFill(GBC.BOTH).setIpad(200, 200).setWeight(100, 0));
-		this.add(remarkPanel, new GBC(0,3,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(100, 0));
-		this.add(pageNumber, new GBC(0,4,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(100, 0));
+		this.add(quesPanel, new GBC(0,2,1,10).setFill(GBC.BOTH).setIpad(200, 400).setWeight(1, 0));
+		this.add(remarkPanel, new GBC(0,12,1,1).setFill(GBC.BOTH).setWeight(0.1, 0));
+		this.add(pageNumber, new GBC(0,13,1,1).setFill(GBC.BOTH).setWeight(0.1, 0));
 		this.setVisible(true);
 	}
 	public void submit(){
 		int size = questionList.size();
 		for(int i = 0; i < size; ++ i)
 			if(!questionList.get(i).submit()){
-				JOptionPane.showConfirmDialog(this, "请检查第" + (i + 1) +"题", "填写不规范提示", JOptionPane.OK_CANCEL_OPTION);
+				JOptionPane.showConfirmDialog(this, "请检查第" + questionList.get(i).getID() +"题", "填写不规范提示", JOptionPane.OK_CANCEL_OPTION);
 			}
 		this.setRemark();
 	}
 	public void addQuestion(Question newQuestion){
 		questionList.add(newQuestion);
 		int size = questionList.size();
-		this.quesPanel.add(newQuestion, new GBC(0,size - 1,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(100, 0));
+		this.quesPanel.add(newQuestion, new GBC(0,size - 1,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(0.1, 0));
 		this.quesPanel.revalidate();
 		this.repaint();
 	}

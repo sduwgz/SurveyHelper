@@ -18,13 +18,13 @@ public class ChoiseQuestion extends Question{
 	JRadioButton[] jrbs;
 	JTextField[] remarks;
 	
-	public ChoiseQuestion(String quesDescribe) {
-		super(quesDescribe);
+	public ChoiseQuestion(int ID, String quesDescribe) {
+		super(ID, quesDescribe);
 		this.quesType = 2;
 		setupUI();
 	}
-	public ChoiseQuestion(String quesDescribe, String choisesString){
-		super(quesDescribe);
+	public ChoiseQuestion(int ID, String quesDescribe, String choisesString){
+		super(ID, quesDescribe);
 		this.quesType = 2;
 		if(choisesString.split(",").length > 1)
 			for(String s : choisesString.split(",")){
@@ -37,7 +37,7 @@ public class ChoiseQuestion extends Question{
 	}
 	public void setupUI(){
 		this.setLayout(new GridBagLayout());
-		jl = new JLabel(quesDescribe);
+		jl = new JLabel(" " + ID + "." + quesDescribe);
 		this.add(jl, new GBC(0,0,2,1).setFill(GBC.BOTH).setIpad(200, 30).setWeight(100, 0));
 		for(int i = 0; i < choisesNumber; ++ i){
 			//System.out.println(answers[i].getText());

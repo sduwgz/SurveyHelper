@@ -6,10 +6,12 @@ public class Question extends JPanel{
 	public String quesDescribe;
 	public String answer = "", statement = "";
 	public int quesType = 0;
+	public int ID;
 	ArrayList<String> answerSet = new ArrayList<String>();
 	ArrayList<String> choises = new ArrayList<String>();
 	double minNumber = 0, maxNumber = 0;
-	public Question(String quesDescribe){
+	public Question(int ID, String quesDescribe){
+		this.ID = ID;
 		if(quesDescribe != null)
 			this.quesDescribe = quesDescribe;
 		else
@@ -40,9 +42,15 @@ public class Question extends JPanel{
 	public String getMaxRange(){
 		return "" + maxNumber;
 	}
+	public int getID(){
+		return ID;
+	}
 	public String getChoises(){
 		String set = String.join(",", choises);
 		return set;
+	}
+	public void getFocus(){
+		
 	}
 	public boolean submit(){
 		return true;

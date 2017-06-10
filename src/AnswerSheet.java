@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -69,13 +71,10 @@ public class AnswerSheet extends JFrame{
 		
 	}
 	public void setupUI(){
+		this.setSize(1000, 800);
+		initStartPage();
+		initEndPage();
 		this.setTitle("调查问卷");
-		startButton = new JButton("开始答题");
-		startPage.setLayout(new BorderLayout());
-		endPage.setLayout(new BorderLayout());
-		startPage.add(startButton, new BorderLayout().CENTER);
-		endButton = new JButton("提交");
-		endPage.add(endButton, new BorderLayout().CENTER);
 		pagePanel.setLayout(card);
 		controlPanel.setLayout(new GridLayout(1, 3));
 		pagePanel.add(startPage);
@@ -93,17 +92,16 @@ public class AnswerSheet extends JFrame{
 			groupList.get(i).setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			groupPanel.add(groupList.get(i));
 		}
-		
-		
 		controlPanel.add(prePage);
 		controlPanel.add(confirm);
 		controlPanel.add(nextPage);
-		this.setSize(1000, 800);
+		
 		this.setLayout(new GridBagLayout());
 		this.add(groupPanel, new GBC(0, 0, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
-		this.add(pagePanel, new GBC(0, 1, 10, 9).setFill(GBC.BOTH).setWeight(1, 1));
+		this.add(pagePanel, new GBC(0, 1, 10, 9).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 200, 0, 200));
 		this.add(controlPanel, new GBC(0, 10, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		 
 		this.setVisible(true);
 	}
 	public void setupListener(){
@@ -139,7 +137,12 @@ public class AnswerSheet extends JFrame{
 				if(curPage < size){
 					card.next(pagePanel);
 					curPage ++;
+					
+					pageList.get(curPage-1).questionList.get(0).getFocus();
 					for(int i = 0; i < groupList.size(); ++ i){
+						if(curPage == groupList.get(i).endPage){
+							ViewPage vp = new ViewPage(pageList, groupList.get(i));
+						}
 						if(curPage > groupList.get(i).endPage)
 							groupList.get(i).done();
 						if(curPage >= groupList.get(i).startPage && curPage <= groupList.get(i).endPage)
@@ -153,6 +156,7 @@ public class AnswerSheet extends JFrame{
 					card.next(pagePanel);
 				}
 				System.out.println(curPage);
+				
 			}
 		});
 		prePage.addActionListener(new ActionListener() {
@@ -179,6 +183,35 @@ public class AnswerSheet extends JFrame{
 				pageList.get(curPage).submit();
 			}
 		});
+	}
+	public void initStartPage() {
+		startPage.setLayout(new GridBagLayout());
+		JPanel jp1 = new JPanel();
+		jp1.setLayout(new GridBagLayout());
+		jp1.setBackground(Color.PINK);
+		JLabel statement = new JLabel();
+		String s = "改问卷共包含" + groupList.size() + "个部分,你需要依次完成以下几个部分:";
+		statement.setText(s);
+		jp1.add(statement, new GBC(0, 0, 5, 1).setInsets(20, 30, 0, 0).setWeight(0.1, 0.1));
+		for(int i = 0; i < groupList.size(); ++ i){
+			JLabel g = new JLabel(groupList.get(i).getName());
+			jp1.add(g, new GBC(1, i + 1, 4, 1).setInsets(20, 50, 0, 0).setWeight(0.1, 0.1));
+		}
+		JLabel login = new JLabel("输入你的编号：");
+		JTextField loginJTF = new JTextField();
+		loginJTF.requestFocus();
+		startButton = new JButton("开始答题");
+		startButton.setBackground(Color.darkGray);
+		startPage.add(jp1, new GBC(0, 0, 10, 10).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 0, 0, 0));
+		startPage.add(login, new GBC(0, 10, 5, 1).setWeight(0.1, 0.1).setInsets(10, 50, 0, 0));
+		startPage.add(loginJTF, new GBC(5, 10, 5, 1).setAnchor(GBC.WEST).setFill(GBC.BOTH).setWeight(1, 0.1).setInsets(10, 0, 0, 100));
+		startPage.add(startButton, new GBC(0, 11, 10, 1).setFill(GBC.BOTH).setWeight(1, 0.1).setInsets(10, 100, 0, 150));
+	}
+	public void initEndPage(){
+		endPage.setLayout(new BorderLayout());
+		endButton = new JButton("完成");
+		
+		endPage.add(endButton, new BorderLayout().CENTER);
 	}
 	public void initWriter() {
 		try {

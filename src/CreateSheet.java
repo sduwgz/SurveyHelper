@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class CreateSheet extends JFrame{
 	JLabel breaks = new JLabel("#################################");
 	int pageNumber = 0;
+	public int questionNumber = 0;
 	JButton createPage = new JButton("新建问题页");
 	JButton undo = new JButton("撤销当前页");
 	JButton finish = new JButton("完成");

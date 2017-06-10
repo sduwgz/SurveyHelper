@@ -67,7 +67,8 @@ public class CreateChoiseQues extends CreateQuestion{
 						choises.add(choisesContent[i].getText());
 				}
 				String choiseString = String.join(",", choises);
-				question = new ChoiseQuestion(fill.getText(), choiseString);
+				question = new ChoiseQuestion(0, fill.getText(), choiseString);
+				question.ID = belogedPage.questionNumber;
 				addQuestiontoPage();
 				cancel();
 			}

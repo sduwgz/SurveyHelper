@@ -27,6 +27,7 @@ public class CreatePage extends JFrame{
 	public CreatePage(CreateSheet cs){
 		setupUI();
 		setupListener();
+		questionNumber = cs.questionNumber;
 		this.belogedCS = cs;
 	}
 	private void setupUI(){
@@ -75,6 +76,7 @@ public class CreatePage extends JFrame{
 		CreateQuestion cf = new CreateChoiseQues(this);
 	}
 	public void addPagetoSheet(){
+		belogedCS.questionNumber = this.questionNumber;
 		System.out.println(newPage.questionList.size());
 		this.belogedCS.addPage(newPage);
 	}
