@@ -24,6 +24,7 @@ public class AnswerSheet extends JFrame{
 	JButton confirm = new JButton("确认");
 	JPanel pagePanel = new JPanel();
 	JPanel groupPanel = new JPanel();
+	JPanel refPanel = new JPanel();
 	JPanel controlPanel = new JPanel();
 	CardLayout card = new CardLayout();
 	ArrayList<Page> pageList;
@@ -89,17 +90,20 @@ public class AnswerSheet extends JFrame{
 		int gsize = groupList.size();
 		for(int i = 0; i < gsize; ++ i){
 			groupList.get(i).setOpaque(true);
-			groupList.get(i).setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			groupList.get(i).setBorder(BorderFactory.createLineBorder(Color.GRAY));
 			groupPanel.add(groupList.get(i));
 		}
+		
+			
 		controlPanel.add(prePage);
 		controlPanel.add(confirm);
 		controlPanel.add(nextPage);
 		
 		this.setLayout(new GridBagLayout());
 		this.add(groupPanel, new GBC(0, 0, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
-		this.add(pagePanel, new GBC(0, 1, 10, 9).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 200, 0, 200));
-		this.add(controlPanel, new GBC(0, 10, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
+		this.add(refPanel, new GBC(0, 1, 10, 2).setFill(GBC.BOTH).setWeight(0.1, 0.1));
+		this.add(pagePanel, new GBC(0, 3, 10, 9).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 200, 0, 200));
+		this.add(controlPanel, new GBC(0, 12, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		 
 		this.setVisible(true);
@@ -108,8 +112,17 @@ public class AnswerSheet extends JFrame{
 		startButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				groupList.get(curGroup).active();
 				int size = pageList.size();
+				curPage = 1;
+				pageList.get(curPage - 1).questionList.get(0).getFocus();
+				for(int i = 0; i < groupList.size(); ++ i){
+					if(curPage > groupList.get(i).endPage)
+						groupList.get(i).done();
+					if(curPage >= groupList.get(i).startPage && curPage <= groupList.get(i).endPage)
+						groupList.get(i).active();
+					if(curPage < groupList.get(i).startPage)
+						groupList.get(i).unreach();
+				}
 				if(curPage <= size - 1){
 					card.next(pagePanel);
 				}
@@ -134,13 +147,14 @@ public class AnswerSheet extends JFrame{
 			//TODO: the groupList will out of index. 
 			public void actionPerformed(ActionEvent e) {
 				int size = pageList.size();
-				if(curPage < size){
+				if(curPage <= size){
 					card.next(pagePanel);
-					curPage ++;
 					
-					pageList.get(curPage-1).questionList.get(0).getFocus();
+					curPage ++;
+					setRefPanel();
 					for(int i = 0; i < groupList.size(); ++ i){
-						if(curPage == groupList.get(i).endPage){
+						if(curPage - 1 == groupList.get(i).endPage){
+							//continue;
 							ViewPage vp = new ViewPage(pageList, groupList.get(i));
 						}
 						if(curPage > groupList.get(i).endPage)
@@ -155,6 +169,8 @@ public class AnswerSheet extends JFrame{
 					groupList.get(groupList.size() - 1).done();
 					card.next(pagePanel);
 				}
+				if(curPage <= size)
+					pageList.get(curPage - 1).questionList.get(0).getFocus();
 				System.out.println(curPage);
 				
 			}
@@ -164,7 +180,9 @@ public class AnswerSheet extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if(curPage > 0){
 					card.previous(pagePanel);
+					setRefPanel();
 					curPage --;
+					
 					for(int i = 0; i < groupList.size(); ++ i){
 						if(curPage > groupList.get(i).endPage)
 							groupList.get(i).done();
@@ -180,7 +198,7 @@ public class AnswerSheet extends JFrame{
 		confirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pageList.get(curPage).submit();
+				pageList.get(curPage - 1).submit();
 			}
 		});
 	}
@@ -212,6 +230,34 @@ public class AnswerSheet extends JFrame{
 		endButton = new JButton("完成");
 		
 		endPage.add(endButton, new BorderLayout().CENTER);
+	}
+	public void setRefPanel(){
+		refPanel.removeAll();
+		refPanel.setLayout(new GridBagLayout());
+		JLabel info = new JLabel("参考题目");
+		if(curPage > pageList.size()) return;
+		ArrayList<Question> ql = pageList.get(curPage - 1).questionList;
+		int pos = 1;
+		for(int i = 0; i < ql.size(); ++ i){
+			if(ql.get(i).getREF() != -1){
+				refPanel.add(info, new GBC(0,0,1,1).setFill(GBC.BOTH).setWeight(0.1, 0).setInsets(0, 200, 0, 200));
+				break;
+			}
+		}
+		for(int i = 0; i < ql.size(); ++ i){
+			for(int j = 0; j < curPage - 1; ++ j){
+				for(int k = 0; k < pageList.get(j).questionList.size(); ++ k){
+					if(ql.get(i).getREF() == pageList.get(j).questionList.get(k).getID()){
+						JLabel que = new JLabel(pageList.get(j).questionList.get(k).getID()  +". " + pageList.get(j).questionList.get(k).getQuesDescribe());
+						JLabel ans = new JLabel(pageList.get(j).questionList.get(k).getAnswer());
+						
+						refPanel.add(que, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
+						refPanel.add(ans, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
+					}
+				}
+			}
+		}
+		refPanel.updateUI();
 	}
 	public void initWriter() {
 		try {

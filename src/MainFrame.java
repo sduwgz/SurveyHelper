@@ -48,7 +48,7 @@ public class MainFrame extends JFrame{
 		
 	}
 	public static void setFont(){
-		Font font = new Font("ËÎÌו",Font.PLAIN,15);
+		Font font = new Font("ËÎÌו",Font.PLAIN,22);
 		UIManager.put("Button.font",font);
 		UIManager.put("ToggleButton.font",font);
 		UIManager.put("RadioButton.font",font);

@@ -13,8 +13,9 @@ public class FillinQuestion extends Question{
 		this.quesType = 1;
 		setupUI();
 	}
-	public FillinQuestion(int ID, String quesDescribe, String setString, String minRange, String maxRange) {
+	public FillinQuestion(int ID, String quesDescribe, String setString, String minRange, String maxRange, int ref) {
 		this(ID, quesDescribe);
+		this.ref = ref;
 		if(setString.split(",").length > 1)
 			for(String s : setString.split(",")){
 				answerSet.add(s);

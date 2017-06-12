@@ -7,6 +7,7 @@ public class Question extends JPanel{
 	public String answer = "", statement = "";
 	public int quesType = 0;
 	public int ID;
+	public int ref = -1;
 	ArrayList<String> answerSet = new ArrayList<String>();
 	ArrayList<String> choises = new ArrayList<String>();
 	double minNumber = 0, maxNumber = 0;
@@ -44,6 +45,9 @@ public class Question extends JPanel{
 	}
 	public int getID(){
 		return ID;
+	}
+	public int getREF(){
+		return ref;
 	}
 	public String getChoises(){
 		String set = String.join(",", choises);

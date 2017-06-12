@@ -27,7 +27,7 @@ public class ViewPage extends JFrame{
 	}
 	private void setupUI(){
 		this.setLayout(new GridBagLayout());
-		this.setSize(200, 500);
+		this.setSize(400, 600);
 		info.setText(curGroup.getName());
 		this.add(info, new GBC(0,0,1,1).setFill(GBC.BOTH).setWeight(0.1, 0));
 		int pos = 1;
@@ -35,7 +35,11 @@ public class ViewPage extends JFrame{
 			if(i + 1 < curGroup.startPage || i + 1 > curGroup.endPage) continue;
 			ArrayList<Question> ql = pageList.get(i).questionList;
 			for(int j = 0; j < ql.size(); ++ j){
-				this.add(ql.get(j), new GBC(0,pos++,1,1).setFill(GBC.BOTH).setIpad(200, 20).setWeight(0.1, 0));
+				JLabel que = new JLabel(ql.get(j).getID()  +". " + ql.get(j).quesDescribe);
+				JLabel ans = new JLabel(ql.get(j).getAnswer());
+				System.out.println(ans.getText());
+				this.add(que, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
+				this.add(ans, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
 			}
 		}
 		controlPanel.setLayout(new GridLayout(1, 2));

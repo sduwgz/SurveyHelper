@@ -24,6 +24,7 @@ public class XMLOperator{
 	public Element getFillIn(Document doc, Question curQues){
 		Element question = doc.createElement("question");
 		question.setAttribute("ID", "" + curQues.getID());
+		question.setAttribute("ref", "" + curQues.getREF());
 		question.setAttribute("type", "" + curQues.getType());
 		question.setAttribute("describe", curQues.getQuesDescribe());
 		question.setAttribute("set", curQues.getAnswerSet());
@@ -109,20 +110,20 @@ public class XMLOperator{
 				Node oneQuestion = questionNodes.item(j);
 				int quesType = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("type").getNodeValue());
 				int ID = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("ID").getNodeValue());
+				int ref = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("ref").getNodeValue());
 				System.out.println("ID:¡¡" + ID);
+				System.out.println("ref:¡¡" + ref);
 				String quesDescribe = oneQuestion.getAttributes().getNamedItem("describe").getNodeValue();
 				
 				if(quesType == 1){
 					String answerSet = oneQuestion.getAttributes().getNamedItem("set").getNodeValue();
 					String minRange = oneQuestion.getAttributes().getNamedItem("min").getNodeValue();
 					String maxRange = oneQuestion.getAttributes().getNamedItem("max").getNodeValue();
-					Question q = new FillinQuestion(ID, quesDescribe, answerSet, minRange, maxRange);
-
+					Question q = new FillinQuestion(ID, quesDescribe, answerSet, minRange, maxRange, ref);
 					questionList.add(q);
 				}else if(quesType == 2){
 					String choises = oneQuestion.getAttributes().getNamedItem("choises").getNodeValue();
 					Question q = new ChoiseQuestion(ID, quesDescribe, choises);
-					q.ID = ID;
 					questionList.add(q);
 				}
 			}
