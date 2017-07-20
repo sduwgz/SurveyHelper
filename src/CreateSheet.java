@@ -40,7 +40,7 @@ public class CreateSheet extends JFrame{
 		contentPanel.setLayout(new GridBagLayout());
 		//contentPanel.add(breaks);
 		scrollPanel.setVerticalScrollBarPolicy( 
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); 
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		this.add(controlPanel, BorderLayout.WEST);
 		this.add(scrollPanel, BorderLayout.CENTER);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

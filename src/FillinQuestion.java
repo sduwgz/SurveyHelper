@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -5,8 +6,6 @@ import java.util.regex.Pattern;
 
 import javax.swing.*;
 public class FillinQuestion extends Question{
-	JLabel jl;
-	JTextField jtf;
 	
 	public FillinQuestion(int ID, String quesDescribe) {
 		super(ID, quesDescribe);
@@ -28,7 +27,9 @@ public class FillinQuestion extends Question{
 		}
 	}
 	public void setupUI(){
-		jl = new JLabel(" " + ID +". " + quesDescribe, JLabel.CENTER);
+		Font font = new Font("ËÎÌו",Font.PLAIN,20);
+		jl = new JLabel(" " + (ID+1) +". " + quesDescribe, JLabel.LEFT);
+		jl.setFont(font);
 		jtf = new JTextField();
 		
 		this.setLayout(new GridLayout(1, 2));

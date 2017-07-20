@@ -8,6 +8,11 @@ public class Question extends JPanel{
 	public int quesType = 0;
 	public int ID;
 	public int ref = -1;
+	public JLabel jl;
+	public JTextField jtf;
+	public ButtonGroup bg = new ButtonGroup();
+	public JRadioButton[] jrbs;
+	public JTextField[] remarks;
 	ArrayList<String> answerSet = new ArrayList<String>();
 	ArrayList<String> choises = new ArrayList<String>();
 	double minNumber = 0, maxNumber = 0;

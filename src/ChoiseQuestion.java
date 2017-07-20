@@ -13,10 +13,6 @@ public class ChoiseQuestion extends Question{
 	//Finish setupUI().
 	//Finish submit(). 
 	int choisesNumber = 0;
-	JLabel jl;
-	ButtonGroup bg = new ButtonGroup();
-	JRadioButton[] jrbs;
-	JTextField[] remarks;
 	
 	public ChoiseQuestion(int ID, String quesDescribe) {
 		super(ID, quesDescribe);
