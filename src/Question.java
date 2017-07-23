@@ -12,6 +12,7 @@ public class Question extends JPanel{
 	public JTextField jtf;
 	public ButtonGroup bg = new ButtonGroup();
 	public JRadioButton[] jrbs;
+	public JCheckBox[] jcbs;
 	public JTextField[] remarks;
 	ArrayList<String> answerSet = new ArrayList<String>();
 	ArrayList<String> choises = new ArrayList<String>();

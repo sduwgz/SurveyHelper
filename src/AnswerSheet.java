@@ -76,13 +76,13 @@ public class AnswerSheet extends JFrame{
 				System.out.println("文件:"+file.getAbsolutePath());
 				JOptionPane.showConfirmDialog(this, "文件 "+ file.getAbsolutePath() + " 不是问卷", "文件错误提示", JOptionPane.OK_CANCEL_OPTION);
 			}
-		}
-		
+		}	
 	}
 	public void setupUI(){
 		this.setSize(1200, 1000);
 		initStartPage();
 		initEndPage();
+		addPageFocus();
 		this.setTitle("调查问卷");
 		pagePanel.setLayout(card);
 		controlPanel.setLayout(new GridLayout(1, 3));
@@ -126,7 +126,7 @@ public class AnswerSheet extends JFrame{
 				curPage = 1;
 				researcherID = loginJTF.getText();
 				System.out.println(researcherID);
-				addPageFocus();
+				
 				pageList.get(curPage - 1).questionList.get(0).getFocus();
 				for(int i = 0; i < groupList.size(); ++ i){
 					if(curPage > groupList.get(i).endPage)
@@ -264,6 +264,7 @@ public class AnswerSheet extends JFrame{
 		refPanel.setLayout(new GridBagLayout());
 		Font font = new Font("宋体",Font.PLAIN,22);
 		JLabel info = new JLabel("参考题目");
+		info.setFont(font);
 		info.setForeground(Color.RED);
 		if(curPage > pageList.size()) return;
 		ArrayList<Question> ql = pageList.get(curPage - 1).questionList;
