@@ -14,22 +14,32 @@ public class ChoiseQuestion extends Question{
 	//Finish submit(). 
 	int choisesNumber = 0;
 	
+	ArrayList<Integer> jumps = new ArrayList<Integer>(); 
 	public ChoiseQuestion(int ID, String quesDescribe) {
 		super(ID, quesDescribe);
 		this.quesType = 2;
 		setupUI();
 	}
 	public ChoiseQuestion(int ID, String quesDescribe, String choisesString){
-		super(ID, quesDescribe);
-		this.quesType = 2;
+		this(ID, quesDescribe);		
 		if(choisesString.split(",").length > 1)
 			for(String s : choisesString.split(",")){
 				choises.add(s);
 			}
 		this.choisesNumber = choises.size();
+		
 		jrbs = new JRadioButton[choisesNumber];
 		remarks = new JTextField[choisesNumber];
 		setupUI();
+	}
+	public ChoiseQuestion(int ID, String quesDescribe, String choisesString, String jumpsString){
+		this(ID, quesDescribe, choisesString);
+		if(jumpsString.split(",").length > 1) {
+			for(String s : jumpsString.split(",")) {
+				jumps.add(Integer.parseInt(s));
+			}
+			jumpornot = true;
+		}
 	}
 	public void setupUI(){
 		this.setLayout(new GridBagLayout());
@@ -54,6 +64,15 @@ public class ChoiseQuestion extends Question{
 			if(choises.get(i).endsWith("#") && remarks[i].getText().length() == 0) return false;
 		}
 		return true;
+	}
+	public int getJump(){
+		if(!jumpornot) return -1;
+		for(int i = 0; i < choisesNumber; ++ i){
+			if(jrbs[i].isSelected()){
+				return jumps.get(i);
+			}
+		}
+		return 0;
 	}
 	public boolean submit(){
 		if(!checkAnswer()) return false;

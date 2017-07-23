@@ -13,6 +13,8 @@ import javax.swing.*;
 public class Page extends JPanel{
 	int pageID = 0;
 	int curQuestion = 0;
+	int nextPage = 0;
+	int prePage = 0;
 	JLabel pageNumber = new JLabel();
 	JLabel title = new JLabel();
 	JTextArea describe = new JTextArea();
@@ -36,6 +38,8 @@ public class Page extends JPanel{
 	public Page(ArrayList<Question> questionList, int n){
 		this(questionList);
 		pageID = n;
+		nextPage = n + 1;
+		prePage = n - 1;
 		pageNumber.setText("第 " + pageID + " 页");
 		pageNumber.setHorizontalAlignment(JTextField.CENTER);
 	}
@@ -92,7 +96,7 @@ public class Page extends JPanel{
         {
         	int size = questionList.size();
         	for(int i = 0; i < size; ++ i)
-    			if(e.getSource() == questionList.get(i).jtf){
+    			if(e.getSource() == questionList.get(i).jtf) {
     				System.out.println("CurQuestion: " + curQuestion);
     			}
         }
@@ -100,11 +104,17 @@ public class Page extends JPanel{
 	
 	public boolean submit(){
 		int size = questionList.size();
-		for(int i = 0; i < size; ++ i)
-			if(!questionList.get(i).submit()){
+		for(int i = 0; i < size; ++ i) {
+			if(!questionList.get(i).submit()) {
 				JOptionPane.showConfirmDialog(this, "请检查第" + (questionList.get(i).getID() + 1) +"题", "填写不规范提示", JOptionPane.OK_CANCEL_OPTION);
 				return false;
 			}
+		}
+		for(int i = 0; i < size; ++ i) {
+			if(questionList.get(i).getType() == 2 && questionList.get(i).jumpornot) {
+				this.nextPage = questionList.get(i).getJump();
+			}
+		}
 		this.setRemark();
 		return true;
 	}

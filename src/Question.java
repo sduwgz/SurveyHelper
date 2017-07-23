@@ -6,6 +6,7 @@ public class Question extends JPanel{
 	public String quesDescribe;
 	public String answer = "", statement = "";
 	public int quesType = 0;
+	public boolean jumpornot = false;
 	public int ID;
 	public int ref = -1;
 	public JLabel jl;
@@ -64,6 +65,9 @@ public class Question extends JPanel{
 	}
 	public boolean submit(){
 		return true;
+	}
+	public int getJump(){
+		return 0;
 	}
 	public void clear(){
 		
