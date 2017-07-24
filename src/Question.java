@@ -17,6 +17,7 @@ public class Question extends JPanel{
 	public JTextField[] remarks;
 	ArrayList<String> answerSet = new ArrayList<String>();
 	ArrayList<String> choises = new ArrayList<String>();
+	ArrayList<String> jumps = new ArrayList<String>();
 	double minNumber = 0, maxNumber = 0;
 	public Question(int ID, String quesDescribe){
 		this.ID = ID;
@@ -58,6 +59,10 @@ public class Question extends JPanel{
 	}
 	public String getChoises(){
 		String set = String.join(",", choises);
+		return set;
+	}
+	public String getJumps(){
+		String set = String.join(",", jumps);
 		return set;
 	}
 	public void getFocus(){

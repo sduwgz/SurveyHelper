@@ -13,6 +13,7 @@ public class CreateChoiseQues extends CreateQuestion{
 	JTextField fill = new JTextField();
 	JLabel[] choisesNumber = new JLabel[choisesCount];
 	JTextField[] choisesContent = new JTextField[choisesCount];
+	JTextField[] jumpsContent = new JTextField[choisesCount];
 	public CreateChoiseQues(CreatePage belogedPage) {
 		super(belogedPage);
 		setupUI();
@@ -26,16 +27,18 @@ public class CreateChoiseQues extends CreateQuestion{
 		controlPanel.add(clear);
 		controlPanel.add(confirm);
 		
-		this.setSize(200, 500);
+		this.setSize(300, 600);
 		this.setLocation(600, 200);
 		this.setLayout(new GridBagLayout());
-		this.add(jl, new GBC(0,0,2,1).setFill(GBC.BOTH).setIpad(200, 30).setWeight(100, 0));
-		this.add(fill, new GBC(0,1,2,1).setFill(GBC.BOTH).setIpad(200, 30).setWeight(100, 0));
+		this.add(jl, new GBC(0,0,3,1).setFill(GBC.BOTH).setIpad(200, 30).setWeight(100, 0));
+		this.add(fill, new GBC(0,1,3,1).setFill(GBC.BOTH).setIpad(200, 30).setWeight(100, 0));
 		for(int i = 0; i < choisesCount; ++ i){
-			choisesNumber[i] = new JLabel("选项 " + i);
+			choisesNumber[i] = new JLabel("选项 " + (i + 1));
 			choisesContent[i] = new JTextField();
+			jumpsContent[i] = new JTextField();
 			this.add(choisesNumber[i], new GBC(0,i + 2,1,1).setFill(GBC.BOTH).setIpad(30, 30).setWeight(100, 0));
 			this.add(choisesContent[i], new GBC(1,i + 2,1,1).setFill(GBC.BOTH).setIpad(170, 30).setWeight(100, 0));
+			this.add(jumpsContent[i], new GBC(2,i + 2,1,1).setFill(GBC.BOTH).setIpad(170, 30).setWeight(100, 0));
 		}
 		this.add(controlPanel, new GBC(0,choisesCount + 2,2,1).setFill(GBC.BOTH).setIpad(200, 30).setWeight(100, 0));
 		this.setVisible(true);
@@ -49,6 +52,7 @@ public class CreateChoiseQues extends CreateQuestion{
 				fill.setText("");
 				for(int i = 0; i < choisesCount; ++ i){
 					choisesContent[i].setText("");
+					jumpsContent[i].setText("");
 				}
 			}
 		});
@@ -62,12 +66,16 @@ public class CreateChoiseQues extends CreateQuestion{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<String> choises = new ArrayList<String>();
+				ArrayList<String> jumps = new ArrayList<String>();
 				for(int i = 0; i < choisesCount; ++ i){
-					if(choisesContent[i].getText().length() != 0)
+					if(choisesContent[i].getText().length() != 0) {
 						choises.add(choisesContent[i].getText());
+						jumps.add(jumpsContent[i].getText());
+					}
 				}
 				String choiseString = String.join(",", choises);
-				question = new ChoiseQuestion(0, fill.getText(), choiseString);
+				String jumpString = String.join(",", jumps);
+				question = new ChoiseQuestion(0, fill.getText(), choiseString, jumpString);
 				question.ID = belogedPage.questionNumber;
 				addQuestiontoPage();
 				cancel();

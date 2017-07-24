@@ -14,7 +14,6 @@ public class ChoiseQuestion extends Question{
 	//Finish submit(). 
 	int choisesNumber = 0;
 	
-	ArrayList<Integer> jumps = new ArrayList<Integer>(); 
 	public ChoiseQuestion(int ID, String quesDescribe) {
 		super(ID, quesDescribe);
 		this.quesType = 2;
@@ -36,7 +35,7 @@ public class ChoiseQuestion extends Question{
 		this(ID, quesDescribe, choisesString);
 		if(jumpsString.split(",").length > 1) {
 			for(String s : jumpsString.split(",")) {
-				jumps.add(Integer.parseInt(s));
+				jumps.add(s);
 			}
 			jumpornot = true;
 		}
@@ -47,7 +46,7 @@ public class ChoiseQuestion extends Question{
 		this.add(jl, new GBC(0,0,2,1).setFill(GBC.BOTH).setIpad(200, 30).setWeight(100, 0));
 		for(int i = 0; i < choisesNumber; ++ i){
 			//System.out.println(answers[i].getText());
-			jrbs[i] = new JRadioButton("" + i + ": " + choises.get(i));
+			jrbs[i] = new JRadioButton("" + (i + 1) + ": " + choises.get(i));
 			remarks[i] = new JTextField();
 			bg.add(jrbs[i]);
 			if(choises.get(i).endsWith("#")){
@@ -69,7 +68,7 @@ public class ChoiseQuestion extends Question{
 		if(!jumpornot) return -1;
 		for(int i = 0; i < choisesNumber; ++ i){
 			if(jrbs[i].isSelected()){
-				return jumps.get(i);
+				return Integer.parseInt(jumps.get(i));
 			}
 		}
 		return 0;
@@ -78,7 +77,10 @@ public class ChoiseQuestion extends Question{
 		if(!checkAnswer()) return false;
 		for(int i = 0; i < choisesNumber; ++ i){
 			if(jrbs[i].isSelected()){
-				this.setAnswer("" + i + "_" + remarks[i].getText());
+				if(choises.get(i).endsWith("#"))
+					this.setAnswer("" + i + "_" + remarks[i].getText());
+				else
+					this.setAnswer("" + i);
 			}
 		}
 		return true;

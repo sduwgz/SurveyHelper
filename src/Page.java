@@ -45,10 +45,18 @@ public class Page extends JPanel{
 	}
 	public Page(ArrayList<Question> questionList, int n, String s, String t){
 		this(questionList, n);
+		pageID = n;
+		nextPage = n + 1;
+		prePage = n - 1;
 		title.setText(s);
 		describe.setText(t);
 		describe.setLineWrap(true);
 		describe.setEditable(false);
+	}
+	public Page(ArrayList<Question> questionList, int n, String s, String t, String pr, String ne){
+		this(questionList, n, s, t);
+		nextPage = Integer.parseInt(pr);
+		prePage = Integer.parseInt(ne);
 	}
 	public void setupUI(){
 		this.setLayout(new GridBagLayout());

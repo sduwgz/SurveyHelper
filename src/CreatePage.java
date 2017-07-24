@@ -18,6 +18,10 @@ public class CreatePage extends JFrame{
 	JLabel pageDescribe = new JLabel("页面描述");
 	JTextField titleField = new JTextField();
 	JTextField describeField = new JTextField();
+	JLabel prePage = new JLabel("前一页");
+	JLabel nextPage = new JLabel("后一页");
+	JTextField preField = new JTextField();
+	JTextField nextField = new JTextField();
 	JPanel controlPanel = new JPanel();
 	JPanel contentPanel = new JPanel();
 	ArrayList<Question> questionList = new ArrayList<Question>();
@@ -43,6 +47,10 @@ public class CreatePage extends JFrame{
 		contentPanel.add(titleField, new GBC(1,0,1,1).setFill(GBC.BOTH).setIpad(300, 20).setWeight(100, 0));
 		contentPanel.add(pageDescribe, new GBC(0,1,1,1).setFill(GBC.BOTH).setIpad(20, 20).setWeight(100, 0));
 		contentPanel.add(describeField, new GBC(1,1,1,1).setFill(GBC.BOTH).setIpad(300, 20).setWeight(100, 0));
+		contentPanel.add(prePage, new GBC(0,2,1,1).setFill(GBC.BOTH).setIpad(50, 20).setWeight(100, 0));
+		contentPanel.add(preField, new GBC(1,2,1,1).setFill(GBC.BOTH).setIpad(50, 20).setWeight(100, 0));
+		contentPanel.add(nextPage, new GBC(0,3,1,1).setFill(GBC.BOTH).setIpad(50, 20).setWeight(100, 0));
+		contentPanel.add(nextField, new GBC(1,3,1,1).setFill(GBC.BOTH).setIpad(50, 20).setWeight(100, 0));
 		this.add(controlPanel, BorderLayout.WEST);
 		this.add(contentPanel, BorderLayout.CENTER);
 		this.setVisible(true);
@@ -63,7 +71,7 @@ public class CreatePage extends JFrame{
 		finish.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				newPage = new Page(questionList, ++ createCount, titleField.getText(), describeField.getText());
+				newPage = new Page(questionList, ++ createCount, titleField.getText(), describeField.getText(), preField.getText(), nextField.getText());
 				addPagetoSheet();
 				cancel();
 			}
@@ -90,7 +98,7 @@ public class CreatePage extends JFrame{
 		//System.out.println(questionNumber);
 		//System.out.println(newQues.quesDescribe);
 		questionList.add(newQues);
-		this.contentPanel.add(newQues, new GBC(0,questionNumber + 1,2,1).setFill(GBC.BOTH).setIpad(300, 20).setWeight(100, 0));
+		this.contentPanel.add(newQues, new GBC(0,questionNumber + 3,2,1).setFill(GBC.BOTH).setIpad(300, 20).setWeight(100, 0));
 		this.contentPanel.revalidate();
 		this.repaint();
 	}

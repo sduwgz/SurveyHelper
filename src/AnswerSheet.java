@@ -89,9 +89,9 @@ public class AnswerSheet extends JFrame{
 		pagePanel.add(startPage);
 		int psize = pageList.size();
 		for(int i = 0; i < psize; ++ i){
-			pagePanel.add(pageList.get(i));
+			pagePanel.add(pageList.get(i), "Page" + (i + 1));
 		}
-		pagePanel.add(endPage);
+		pagePanel.add(endPage, "Page" + (psize + 1));
 		
 		groupPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 		groupPanel.setLayout(new GridLayout(1, groupList.size()));
@@ -160,12 +160,17 @@ public class AnswerSheet extends JFrame{
 			@Override
 			//TODO: the groupList will out of index. 
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("CurPage: " + curPage);
 				int size = pageList.size();
+				System.out.println("pageSize: " + size);
 				if(curPage <= size){
 					if(!pageList.get(curPage - 1).submit()) return;
-					card.next(pagePanel);
-					
-					curPage ++;
+					//card.next(pagePanel);
+					int tempPage = curPage;
+					curPage = next();
+					System.out.println("CurPage: " + curPage);
+					if(curPage <= size)
+						pageList.get(curPage - 1).prePage = tempPage; 
 					setRefPanel();
 					for(int i = 0; i < groupList.size(); ++ i){
 						if(curPage - 1 == groupList.get(i).endPage){
@@ -181,11 +186,11 @@ public class AnswerSheet extends JFrame{
 					}
 				} else {
 					curPage = 0;
-					groupList.get(groupList.size() - 1).done();
-					card.next(pagePanel);
+					if(groupList.size() != 0)
+						groupList.get(groupList.size() - 1).done();
+					card.show(pagePanel, "Page" + (pageList.size() + 1));
 				}
-				if(curPage <= size){
-					
+				if(curPage <= size && curPage >= 1){					
 					pageList.get(curPage - 1).questionList.get(0).getFocus();
 				}
 				System.out.println(curPage);
@@ -195,10 +200,11 @@ public class AnswerSheet extends JFrame{
 		prePage.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				System.out.println("CurPage: " + curPage);
 				if(curPage > 0){
-					card.previous(pagePanel);
+					//card.previous(pagePanel);
 					setRefPanel();
-					curPage --;
+					curPage = back();
 					
 					for(int i = 0; i < groupList.size(); ++ i){
 						if(curPage > groupList.get(i).endPage)
@@ -319,6 +325,18 @@ public class AnswerSheet extends JFrame{
 		        }
 		    }
 		}, AWTEvent.KEY_EVENT_MASK);
+	}
+	public int next() {
+		int np = pageList.get(curPage - 1).nextPage;
+		System.out.println("Nextpage: " + np);
+		card.show(pagePanel, "Page" + np);
+		System.out.println("Show: " + np);
+		return np;
+	}
+	public int back() {
+		int bp = pageList.get(curPage - 1).prePage;
+		card.show(pagePanel, "Page" + (bp - 1));
+		return bp;
 	}
 	public void initWriter() {
 		try {

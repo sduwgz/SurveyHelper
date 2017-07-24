@@ -34,7 +34,7 @@ public class CreateFillinQues extends CreateQuestion{
 		maxNumber = new JLabel("最大值(数字)");
 		maxField = new JTextField();
 		
-		this.setSize(300, 500);
+		this.setSize(300, 600);
 		this.setLocation(600, 200);
 		this.setLayout(new GridBagLayout());
 		this.add(jl, new GBC(0,0,2,1).setFill(GBC.BOTH).setIpad(200, 50).setWeight(100, 0));

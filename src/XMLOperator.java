@@ -38,6 +38,8 @@ public class XMLOperator{
 		question.setAttribute("type", "" + curQues.getType());
 		question.setAttribute("describe", curQues.getQuesDescribe());
 		question.setAttribute("choises", curQues.getChoises());
+		question.setAttribute("jumps", curQues.getJumps());
+		
 		return question;
 	}
 	public Document newDocument() throws Exception{
@@ -54,6 +56,8 @@ public class XMLOperator{
 			ArrayList<Question> quesList = pageList.get(i).questionList;
 			page.setAttribute("title", pageList.get(i).title.getText());
 			page.setAttribute("describe", pageList.get(i).describe.getText());
+			page.setAttribute("pr", "" + pageList.get(i).prePage);
+			page.setAttribute("ne", "" + pageList.get(i).nextPage);
 			int quesSize = quesList.size();
 			for(int j = 0; j < quesSize; ++ j){
 				Question curQues = quesList.get(j);
@@ -102,6 +106,8 @@ public class XMLOperator{
 			//System.out.println(onePage.toString());
 			String pageTitle = onePage.getAttributes().getNamedItem("title").getNodeValue();
 			String pageDescribe = onePage.getAttributes().getNamedItem("describe").getNodeValue();
+			String pr = onePage.getAttributes().getNamedItem("pr").getNodeValue();
+			String ne = onePage.getAttributes().getNamedItem("ne").getNodeValue();
 			//System.out.println(pageTitle);
 			//System.out.println(pageDescribe);
 			NodeList questionNodes = onePage.getChildNodes();
@@ -123,11 +129,12 @@ public class XMLOperator{
 					questionList.add(q);
 				}else if(quesType == 2){
 					String choises = oneQuestion.getAttributes().getNamedItem("choises").getNodeValue();
-					Question q = new ChoiseQuestion(ID, quesDescribe, choises);
+					String jumps = oneQuestion.getAttributes().getNamedItem("jumps").getNodeValue();
+					Question q = new ChoiseQuestion(ID, quesDescribe, choises, jumps);
 					questionList.add(q);
 				}
 			}
-			Page p = new Page(questionList, i + 1, pageTitle, pageDescribe);
+			Page p = new Page(questionList, i + 1, pageTitle, pageDescribe, pr, ne);
 			pageList.add(p);
 		}
 		AnswerSheet as = new AnswerSheet(pageList, groupList);
