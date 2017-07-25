@@ -22,6 +22,8 @@ public class CreatePage extends JFrame{
 	JLabel nextPage = new JLabel("后一页");
 	JTextField preField = new JTextField();
 	JTextField nextField = new JTextField();
+	JLabel refQuestion = new JLabel("参考题目");
+	JTextField refField = new JTextField();
 	JPanel controlPanel = new JPanel();
 	JPanel contentPanel = new JPanel();
 	ArrayList<Question> questionList = new ArrayList<Question>();
@@ -31,7 +33,7 @@ public class CreatePage extends JFrame{
 	public CreatePage(CreateSheet cs){
 		setupUI();
 		setupListener();
-		questionNumber = cs.questionNumber;
+		questionNumber = 0;
 		this.belogedCS = cs;
 	}
 	private void setupUI(){
@@ -51,6 +53,8 @@ public class CreatePage extends JFrame{
 		contentPanel.add(preField, new GBC(1,2,1,1).setFill(GBC.BOTH).setIpad(50, 20).setWeight(100, 0));
 		contentPanel.add(nextPage, new GBC(0,3,1,1).setFill(GBC.BOTH).setIpad(50, 20).setWeight(100, 0));
 		contentPanel.add(nextField, new GBC(1,3,1,1).setFill(GBC.BOTH).setIpad(50, 20).setWeight(100, 0));
+		contentPanel.add(refQuestion, new GBC(0,4,1,1).setFill(GBC.BOTH).setIpad(50, 20).setWeight(100, 0));
+		contentPanel.add(refField, new GBC(1,4,1,1).setFill(GBC.BOTH).setIpad(50, 20).setWeight(100, 0));
 		this.add(controlPanel, BorderLayout.WEST);
 		this.add(contentPanel, BorderLayout.CENTER);
 		this.setVisible(true);
@@ -71,7 +75,7 @@ public class CreatePage extends JFrame{
 		finish.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				newPage = new Page(questionList, ++ createCount, titleField.getText(), describeField.getText(), preField.getText(), nextField.getText());
+				newPage = new Page(questionList, ++ createCount, titleField.getText(), describeField.getText(), preField.getText(), nextField.getText(), refField.getText());
 				addPagetoSheet();
 				cancel();
 			}
@@ -84,7 +88,7 @@ public class CreatePage extends JFrame{
 		CreateQuestion cf = new CreateChoiseQues(this);
 	}
 	public void addPagetoSheet(){
-		belogedCS.questionNumber = this.questionNumber;
+		belogedCS.questionNumber += this.questionNumber;
 		System.out.println(newPage.questionList.size());
 		this.belogedCS.addPage(newPage);
 	}

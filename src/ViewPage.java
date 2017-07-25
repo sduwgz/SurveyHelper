@@ -45,9 +45,13 @@ public class ViewPage extends JFrame{
 		int pos = 1;
 		for(int i = 0; i < pageList.size(); ++ i){
 			if(i + 1 < curGroup.startPage || i + 1 > curGroup.endPage) continue;
+			font = new Font("宋体",Font.PLAIN,24);
+			JLabel pageTitle = new JLabel(pageList.get(i).title.getText());
+			pageTitle.setFont(font);
+			contentPanel.add(pageTitle, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
 			ArrayList<Question> ql = pageList.get(i).questionList;
 			for(int j = 0; j < ql.size(); ++ j){
-				font = new Font("宋体",Font.PLAIN,24);
+				font = new Font("宋体",Font.PLAIN,20);
 				JLabel que = new JLabel((ql.get(j).getID() + 1)  + ". " + ql.get(j).quesDescribe);
 				que.setFont(font);
 				JLabel ans = new JLabel("  答案：" + ql.get(j).getAnswer());

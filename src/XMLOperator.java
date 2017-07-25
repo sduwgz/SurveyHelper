@@ -24,7 +24,7 @@ public class XMLOperator{
 	public Element getFillIn(Document doc, Question curQues){
 		Element question = doc.createElement("question");
 		question.setAttribute("ID", "" + curQues.getID());
-		question.setAttribute("ref", "" + curQues.getREF());
+		//question.setAttribute("ref", "" + curQues.getREF());
 		question.setAttribute("type", "" + curQues.getType());
 		question.setAttribute("describe", curQues.getQuesDescribe());
 		question.setAttribute("set", curQues.getAnswerSet());
@@ -58,6 +58,7 @@ public class XMLOperator{
 			page.setAttribute("describe", pageList.get(i).describe.getText());
 			page.setAttribute("pr", "" + pageList.get(i).prePage);
 			page.setAttribute("ne", "" + pageList.get(i).nextPage);
+			page.setAttribute("ref", "" + pageList.get(i).refQues);
 			int quesSize = quesList.size();
 			for(int j = 0; j < quesSize; ++ j){
 				Question curQues = quesList.get(j);
@@ -108,6 +109,7 @@ public class XMLOperator{
 			String pageDescribe = onePage.getAttributes().getNamedItem("describe").getNodeValue();
 			String pr = onePage.getAttributes().getNamedItem("pr").getNodeValue();
 			String ne = onePage.getAttributes().getNamedItem("ne").getNodeValue();
+			String ref = onePage.getAttributes().getNamedItem("ref").getNodeValue();
 			//System.out.println(pageTitle);
 			//System.out.println(pageDescribe);
 			NodeList questionNodes = onePage.getChildNodes();
@@ -116,25 +118,25 @@ public class XMLOperator{
 				Node oneQuestion = questionNodes.item(j);
 				int quesType = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("type").getNodeValue());
 				int ID = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("ID").getNodeValue());
-				int ref = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("ref").getNodeValue());
-				System.out.println("ID:　" + ID);
-				System.out.println("ref:　" + ref);
+				//int ref = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("ref").getNodeValue());
+				//System.out.println("ID:　" + ID);
+				//System.out.println("ref:　" + ref);
 				String quesDescribe = oneQuestion.getAttributes().getNamedItem("describe").getNodeValue();
 				
 				if(quesType == 1){
 					String answerSet = oneQuestion.getAttributes().getNamedItem("set").getNodeValue();
 					String minRange = oneQuestion.getAttributes().getNamedItem("min").getNodeValue();
 					String maxRange = oneQuestion.getAttributes().getNamedItem("max").getNodeValue();
-					Question q = new FillinQuestion(ID, quesDescribe, answerSet, minRange, maxRange, ref);
+					Question q = new FillinQuestion(ID, quesDescribe, answerSet, minRange, maxRange);
 					questionList.add(q);
-				}else if(quesType == 2){
+				}else if(quesType == 2){ 
 					String choises = oneQuestion.getAttributes().getNamedItem("choises").getNodeValue();
 					String jumps = oneQuestion.getAttributes().getNamedItem("jumps").getNodeValue();
 					Question q = new ChoiseQuestion(ID, quesDescribe, choises, jumps);
 					questionList.add(q);
 				}
 			}
-			Page p = new Page(questionList, i + 1, pageTitle, pageDescribe, pr, ne);
+			Page p = new Page(questionList, i + 1, pageTitle, pageDescribe, pr, ne, ref);
 			pageList.add(p);
 		}
 		AnswerSheet as = new AnswerSheet(pageList, groupList);

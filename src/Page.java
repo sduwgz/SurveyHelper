@@ -15,6 +15,7 @@ public class Page extends JPanel{
 	int curQuestion = 0;
 	int nextPage = 0;
 	int prePage = 0;
+	String refQues = "";
 	JLabel pageNumber = new JLabel();
 	JLabel title = new JLabel();
 	JTextArea describe = new JTextArea();
@@ -53,10 +54,12 @@ public class Page extends JPanel{
 		describe.setLineWrap(true);
 		describe.setEditable(false);
 	}
-	public Page(ArrayList<Question> questionList, int n, String s, String t, String pr, String ne){
+	public Page(ArrayList<Question> questionList, int n, String s, String t, String pr, String ne, String r){
 		this(questionList, n, s, t);
-		nextPage = Integer.parseInt(pr);
-		prePage = Integer.parseInt(ne);
+		
+		prePage = Integer.parseInt(pr);
+		nextPage = Integer.parseInt(ne);
+		refQues = r;
 	}
 	public void setupUI(){
 		this.setLayout(new GridBagLayout());
@@ -109,7 +112,9 @@ public class Page extends JPanel{
     			}
         }
     }
-	
+	public String getRef(){
+		return refQues;
+	}
 	public boolean submit(){
 		int size = questionList.size();
 		for(int i = 0; i < size; ++ i) {

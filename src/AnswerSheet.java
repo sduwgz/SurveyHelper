@@ -44,6 +44,9 @@ public class AnswerSheet extends JFrame{
 	public AnswerSheet(ArrayList<Page> pageList, ArrayList<Group> groupList) throws IOException {
 		this.pageList = pageList;
 		this.groupList = groupList;
+		for(Page p : pageList){
+			System.out.println("ID " + p.pageID + " " + p.prePage + " " + p.nextPage);
+		}
 		initWriter();
 		setupUI();
 		setupListener();
@@ -169,8 +172,8 @@ public class AnswerSheet extends JFrame{
 					int tempPage = curPage;
 					curPage = next();
 					System.out.println("CurPage: " + curPage);
-					if(curPage <= size)
-						pageList.get(curPage - 1).prePage = tempPage; 
+					//if(curPage <= size)
+						//pageList.get(curPage - 1).prePage = tempPage; 
 					setRefPanel();
 					for(int i = 0; i < groupList.size(); ++ i){
 						if(curPage - 1 == groupList.get(i).endPage){
@@ -268,12 +271,31 @@ public class AnswerSheet extends JFrame{
 	public void setRefPanel(){
 		refPanel.removeAll();
 		refPanel.setLayout(new GridBagLayout());
+		JPanel refContent = new JPanel();
+		refContent.setLayout(new GridBagLayout());
 		Font font = new Font("宋体",Font.PLAIN,22);
-		JLabel info = new JLabel("参考题目");
+		JLabel info = new JLabel("提示板:");
 		info.setFont(font);
 		info.setForeground(Color.RED);
 		if(curPage > pageList.size()) return;
-		ArrayList<Question> ql = pageList.get(curPage - 1).questionList;
+		String refQues = pageList.get(curPage - 1).getRef();
+		
+		int pos = 0;
+		for(String s : refQues.split(",")) {
+			int pn = Integer.parseInt(s.split("-")[0]);
+			int qn = Integer.parseInt(s.split("-")[1]);
+			JLabel que = new JLabel(s +". " + pageList.get(pn - 1).questionList.get(qn - 1).getQuesDescribe());
+			JLabel ans = new JLabel(pageList.get(pn - 1).questionList.get(qn - 1).getAnswer());
+			
+			refContent.add(que, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
+			refContent.add(ans, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
+		}
+		if(refQues != "") {
+			refPanel.setBackground(Color.GRAY);
+			refPanel.add(info, new GBC(0,0,1,1).setFill(GBC.BOTH).setWeight(0.1, 0).setInsets(0, 100, 0, 0));
+			refPanel.add(refContent, new GBC(1,0,10,1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 0, 0, 0));
+		}
+		/*ArrayList<Question> ql = pageList.get(curPage - 1).questionList;
 		int pos = 1;
 		for(int i = 0; i < ql.size(); ++ i){
 			if(ql.get(i).getREF() != -1){
@@ -281,6 +303,7 @@ public class AnswerSheet extends JFrame{
 				break;
 			}
 		}
+		
 		for(int i = 0; i < ql.size(); ++ i){
 			for(int j = 0; j < curPage - 1; ++ j){
 				for(int k = 0; k < pageList.get(j).questionList.size(); ++ k){
@@ -293,7 +316,8 @@ public class AnswerSheet extends JFrame{
 					}
 				}
 			}
-		}
+		}*/
+		
 		refPanel.updateUI();
 	}
 	public void addPageFocus(){
@@ -330,12 +354,13 @@ public class AnswerSheet extends JFrame{
 		int np = pageList.get(curPage - 1).nextPage;
 		System.out.println("Nextpage: " + np);
 		card.show(pagePanel, "Page" + np);
+		//this.repaint();
 		System.out.println("Show: " + np);
 		return np;
 	}
 	public int back() {
 		int bp = pageList.get(curPage - 1).prePage;
-		card.show(pagePanel, "Page" + (bp - 1));
+		card.show(pagePanel, "Page" + bp);
 		return bp;
 	}
 	public void initWriter() {
