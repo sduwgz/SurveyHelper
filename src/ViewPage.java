@@ -43,12 +43,17 @@ public class ViewPage extends JFrame{
 		info.setBackground(Color.GRAY);
 		this.add(info, new GBC(0,0,1,1).setFill(GBC.BOTH).setWeight(0.1, 0.2));
 		int pos = 1;
-		for(int i = 0; i < pageList.size(); ++ i){
-			if(i + 1 < curGroup.startPage || i + 1 > curGroup.endPage) continue;
+		int i = 0;
+		//for(int i = 0; i < pageList.size(); ++ i){
+		while(i < pageList.size()){
+			if(i + 1 < curGroup.startPage || i + 1 > curGroup.endPage) {
+				i = pageList.get(i).nextPage - 1;
+				continue;
+			}
 			font = new Font("ËÎÌå",Font.PLAIN,24);
-			JLabel pageTitle = new JLabel(pageList.get(i).title.getText());
+			JLabel pageTitle = new JLabel("µÚ" + (i + 1) + "Ò³£º" + pageList.get(i).title.getText());
 			pageTitle.setFont(font);
-			contentPanel.add(pageTitle, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
+			contentPanel.add(pageTitle, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 40, 0, 0).setWeight(0.1, 0));
 			ArrayList<Question> ql = pageList.get(i).questionList;
 			for(int j = 0; j < ql.size(); ++ j){
 				font = new Font("ËÎÌå",Font.PLAIN,20);
@@ -58,9 +63,11 @@ public class ViewPage extends JFrame{
 				ans.setFont(font);
 				ans.setForeground(Color.RED);
 				System.out.println(ans.getText());
-				contentPanel.add(que, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
-				contentPanel.add(ans, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
+				contentPanel.add(que, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 50, 0, 0).setWeight(0.1, 0));
+				contentPanel.add(ans, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 50, 0, 0).setWeight(0.1, 0));
 			}
+			i = pageList.get(i).nextPage - 1;
+			System.out.println(i);
 		}
 		controlPanel.setLayout(new GridLayout(1, 2));
 		controlPanel.add(back);

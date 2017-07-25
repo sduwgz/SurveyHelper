@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -42,11 +43,14 @@ public class ChoiseQuestion extends Question{
 	}
 	public void setupUI(){
 		this.setLayout(new GridBagLayout());
-		jl = new JLabel(" " + ID + "." + quesDescribe);
+		Font font = new Font("ËÎÌו",Font.PLAIN,22);
+		jl = new JLabel(" " + (ID + 1) + "." + quesDescribe);
+		jl.setFont(font);
 		this.add(jl, new GBC(0,0,2,1).setFill(GBC.BOTH).setIpad(200, 30).setWeight(100, 0));
 		for(int i = 0; i < choisesNumber; ++ i){
 			//System.out.println(answers[i].getText());
-			jrbs[i] = new JRadioButton("" + (i + 1) + ": " + choises.get(i));
+			jrbs[i] = new JRadioButton("" + ((char)('A' + i)) + ": " + choises.get(i));
+			jrbs[i].setFont(font);
 			remarks[i] = new JTextField();
 			bg.add(jrbs[i]);
 			if(choises.get(i).endsWith("#")){
@@ -60,9 +64,14 @@ public class ChoiseQuestion extends Question{
 	}
 	public boolean checkAnswer(){
 		for(int i = 0; i < choisesNumber; ++ i){
-			if(choises.get(i).endsWith("#") && remarks[i].getText().length() == 0) return false;
+			if(jrbs[i].isSelected() && choises.get(i).endsWith("#") && remarks[i].getText().length() == 0) return false;
 		}
-		return true;
+		for(int i = 0; i < choisesNumber; ++ i){
+			if(jrbs[i].isSelected()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	public int getJump(){
 		if(!jumpornot) return -1;
@@ -71,7 +80,7 @@ public class ChoiseQuestion extends Question{
 				return Integer.parseInt(jumps.get(i));
 			}
 		}
-		return 0;
+		return -1;
 	}
 	public boolean submit(){
 		if(!checkAnswer()) return false;

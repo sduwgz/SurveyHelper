@@ -82,7 +82,7 @@ public class AnswerSheet extends JFrame{
 		}	
 	}
 	public void setupUI(){
-		this.setSize(1200, 1000);
+		this.setSize(1000, 800);
 		initStartPage();
 		initEndPage();
 		addPageFocus();
@@ -115,7 +115,7 @@ public class AnswerSheet extends JFrame{
 		this.setLayout(new GridBagLayout());
 		this.add(groupPanel, new GBC(0, 0, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
 		this.add(refPanel, new GBC(0, 1, 10, 2).setFill(GBC.BOTH).setWeight(0.1, 0.1));
-		this.add(pagePanel, new GBC(0, 3, 10, 9).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 200, 0, 200));
+		this.add(pagePanel, new GBC(0, 3, 10, 9).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 100, 0, 100));
 		this.add(controlPanel, new GBC(0, 12, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		 
@@ -206,9 +206,9 @@ public class AnswerSheet extends JFrame{
 				System.out.println("CurPage: " + curPage);
 				if(curPage > 0){
 					//card.previous(pagePanel);
-					setRefPanel();
-					curPage = back();
 					
+					curPage = back();
+					setRefPanel();
 					for(int i = 0; i < groupList.size(); ++ i){
 						if(curPage > groupList.get(i).endPage)
 							groupList.get(i).done();
@@ -235,21 +235,21 @@ public class AnswerSheet extends JFrame{
 		jp1.setBackground(Color.PINK);
 		JLabel statement = new JLabel();
 		String s = "该问卷共包含" + groupList.size() + "个部分,你需要依次完成以下几个部分:";
-		Font font = new Font("宋体",Font.PLAIN,26);
+		Font font = new Font("宋体",Font.PLAIN,20);
 		statement.setText(s);
 		statement.setFont(font);
 		jp1.add(statement, new GBC(0, 0, 5, 1).setInsets(20, 30, 0, 0).setWeight(0.1, 0.1));
-		font = new Font("宋体",Font.PLAIN,30);
+		font = new Font("宋体",Font.PLAIN,24);
 		for(int i = 0; i < groupList.size(); ++ i){
 			JLabel g = new JLabel(groupList.get(i).getName());
 			g.setFont(font);
 			jp1.add(g, new GBC(1, i + 1, 4, 1).setInsets(20, 50, 0, 0).setWeight(0.1, 0.1));
 		}
-		font = new Font("宋体",Font.PLAIN,22);
+		font = new Font("宋体",Font.PLAIN,20);
 		JLabel login = new JLabel("输入你的编号：");
 		login.setFont(font);
 		loginJTF.requestFocus();
-		font = new Font("宋体",Font.PLAIN,35);
+		font = new Font("宋体",Font.PLAIN,30);
 		startButton = new JButton("开始答题");
 		startButton.setFont(font);
 		startButton.setBackground(Color.lightGray);
@@ -270,23 +270,36 @@ public class AnswerSheet extends JFrame{
 	}
 	public void setRefPanel(){
 		refPanel.removeAll();
+		if(curPage > pageList.size()) {
+			//refPanel.updateUI();
+			refPanel.updateUI();
+			return;
+		}
+		String refQues = pageList.get(curPage - 1).getRef();
+		if(refQues == "") {
+			//refPanel.updateUI();
+			refPanel.updateUI();
+			return;
+		}
+		
 		refPanel.setLayout(new GridBagLayout());
 		JPanel refContent = new JPanel();
 		refContent.setLayout(new GridBagLayout());
-		Font font = new Font("宋体",Font.PLAIN,22);
+		Font font = new Font("宋体",Font.PLAIN,24);
 		JLabel info = new JLabel("提示板:");
 		info.setFont(font);
 		info.setForeground(Color.RED);
-		if(curPage > pageList.size()) return;
-		String refQues = pageList.get(curPage - 1).getRef();
 		
 		int pos = 0;
+		font = new Font("宋体",Font.PLAIN,16);
 		for(String s : refQues.split(",")) {
 			int pn = Integer.parseInt(s.split("-")[0]);
 			int qn = Integer.parseInt(s.split("-")[1]);
 			JLabel que = new JLabel(s +". " + pageList.get(pn - 1).questionList.get(qn - 1).getQuesDescribe());
-			JLabel ans = new JLabel(pageList.get(pn - 1).questionList.get(qn - 1).getAnswer());
-			
+			JLabel ans = new JLabel("   答案：" + pageList.get(pn - 1).questionList.get(qn - 1).getAnswer());
+			que.setFont(font);
+			ans.setFont(font);
+			ans.setForeground(Color.RED);
 			refContent.add(que, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
 			refContent.add(ans, new GBC(0,pos++,1,1).setFill(GBC.BOTH).setAnchor(GBC.WEST).setInsets(10, 100, 0, 0).setWeight(0.1, 0));
 		}
@@ -317,7 +330,6 @@ public class AnswerSheet extends JFrame{
 				}
 			}
 		}*/
-		
 		refPanel.updateUI();
 	}
 	public void addPageFocus(){
