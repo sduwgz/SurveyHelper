@@ -106,7 +106,6 @@ public class AnswerSheet extends JFrame{
 			groupList.get(i).setBorder(BorderFactory.createLineBorder(Color.GRAY));
 			groupPanel.add(groupList.get(i));
 		}
-		
 			
 		controlPanel.add(prePage);
 		controlPanel.add(confirm);
