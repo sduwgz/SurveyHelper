@@ -27,7 +27,7 @@ public class FillinQuestion extends Question{
 	}
 	public void setupUI(){
 		Font font = new Font("ËÎÌו",Font.PLAIN,20);
-		jl = new JLabel(" " + (ID+1) +". " + quesDescribe, JLabel.LEFT);
+		jl = new JLabel(" " + (ID+1) +". " + quesDescribe.split("_")[1], JLabel.LEFT);
 		jl.setFont(font);
 		jtf = new JTextField();
 		

@@ -47,7 +47,7 @@ public class AnswerSheet extends JFrame{
 		for(Page p : pageList){
 			System.out.println("ID " + p.pageID + " " + p.prePage + " " + p.nextPage);
 		}
-		initWriter();
+		
 		setupUI();
 		setupListener();
 	}
@@ -82,14 +82,14 @@ public class AnswerSheet extends JFrame{
 		}	
 	}
 	public void setupUI(){
-		this.setSize(1000, 800);
+		this.setSize(1200, 700);
 		initStartPage();
 		initEndPage();
 		addPageFocus();
 		this.setTitle("调查问卷");
 		pagePanel.setLayout(card);
 		controlPanel.setLayout(new GridLayout(1, 3));
-		pagePanel.add(startPage);
+		pagePanel.add(startPage, "Page0");
 		int psize = pageList.size();
 		for(int i = 0; i < psize; ++ i){
 			pagePanel.add(pageList.get(i), "Page" + (i + 1));
@@ -114,9 +114,9 @@ public class AnswerSheet extends JFrame{
 		
 		this.setLayout(new GridBagLayout());
 		this.add(groupPanel, new GBC(0, 0, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
-		this.add(refPanel, new GBC(0, 1, 10, 2).setFill(GBC.BOTH).setWeight(0.1, 0.1));
+		this.add(refPanel, new GBC(0, 1, 10, 2).setFill(GBC.BOTH).setWeight(0, 0));
 		this.add(pagePanel, new GBC(0, 3, 10, 9).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 100, 0, 100));
-		this.add(controlPanel, new GBC(0, 12, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
+		this.add(controlPanel, new GBC(0, 12, 10, 1).setFill(GBC.BOTH).setWeight(0, 0));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		 
 		this.setVisible(true);
@@ -128,6 +128,7 @@ public class AnswerSheet extends JFrame{
 				int size = pageList.size();
 				curPage = 1;
 				researcherID = loginJTF.getText();
+				initWriter();
 				System.out.println(researcherID);
 				
 				pageList.get(curPage - 1).questionList.get(0).getFocus();
@@ -172,8 +173,8 @@ public class AnswerSheet extends JFrame{
 					int tempPage = curPage;
 					curPage = next();
 					System.out.println("CurPage: " + curPage);
-					//if(curPage <= size)
-						//pageList.get(curPage - 1).prePage = tempPage; 
+					if(curPage <= size)
+						pageList.get(curPage - 1).prePage = tempPage; 
 					setRefPanel();
 					for(int i = 0; i < groupList.size(); ++ i){
 						if(curPage - 1 == groupList.get(i).endPage){
@@ -227,6 +228,14 @@ public class AnswerSheet extends JFrame{
 				pageList.get(curPage - 1).submit();
 			}
 		});
+		addWindowListener(new WindowAdapter() {
+	        public void windowClosing(WindowEvent e) {
+	           int i=JOptionPane.showConfirmDialog(null, "确定要退出系统吗？", "退出系统", JOptionPane.YES_NO_OPTION);
+	        if(i==JOptionPane.YES_OPTION){
+	         System.exit(0);
+	        }
+	        }
+	   });
 	}
 	public void initStartPage() {
 		startPage.setLayout(new GridBagLayout());
@@ -249,14 +258,14 @@ public class AnswerSheet extends JFrame{
 		JLabel login = new JLabel("输入你的编号：");
 		login.setFont(font);
 		loginJTF.requestFocus();
-		font = new Font("宋体",Font.PLAIN,30);
+		font = new Font("宋体",Font.PLAIN,25);
 		startButton = new JButton("开始答题");
 		startButton.setFont(font);
 		startButton.setBackground(Color.lightGray);
 		startPage.add(jp1, new GBC(0, 0, 10, 10).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 0, 0, 0));
 		startPage.add(login, new GBC(0, 10, 5, 1).setWeight(0.1, 0.1).setInsets(10, 50, 0, 0));
 		startPage.add(loginJTF, new GBC(5, 10, 5, 1).setAnchor(GBC.WEST).setFill(GBC.BOTH).setWeight(1, 0.1).setInsets(10, 0, 0, 100));
-		startPage.add(startButton, new GBC(0, 11, 10, 1).setFill(GBC.BOTH).setWeight(1, 0.1).setInsets(10, 100, 0, 150));
+		startPage.add(startButton, new GBC(0, 11, 10, 1).setFill(GBC.BOTH).setWeight(0.3, 0.1).setInsets(10, 100, 0, 150));
 	}
 	public void initEndPage(){
 		endPage.setLayout(new BorderLayout());
@@ -377,9 +386,9 @@ public class AnswerSheet extends JFrame{
 	}
 	public void initWriter() {
 		try {
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");//设置日期格式
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
 			String date = df.format(new Date());// new Date()为获取当前系统时间
-			String outFileName = "output_" + date + ".xls";
+			String outFileName = "output_" + researcherID + "_" + date + ".xls";
 			writer = new ExcelWriter(outFileName);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -388,7 +397,7 @@ public class AnswerSheet extends JFrame{
 		ArrayList<String> table = new ArrayList<String>();
 		for(Page page : pageList){
 			for(Question q : page.questionList){
-				table.add(q.getQuesDescribe());
+				table.add(q.getQuesDescribe().split("_")[0]);
 			}
 		}
 		//A bad transform from ArrayList to String[]

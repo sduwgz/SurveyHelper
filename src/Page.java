@@ -63,28 +63,28 @@ public class Page extends JPanel{
 	}
 	public void setupUI(){
 		this.setLayout(new GridBagLayout());
-		this.setSize(200, 500);
-		Font font = new Font("宋体",Font.PLAIN,36);
-		this.add(title, new GBC(0,0,1,1).setFill(GBC.BOTH).setWeight(0.1, 0));
+		//this.setSize(200, 500);
+		Font font = new Font("宋体",Font.PLAIN,30);
+		this.add(title, new GBC(0,0,1,1).setFill(GBC.BOTH).setWeight(0, 0));
 		title.setFont(font);
 		font = new Font("宋体",Font.PLAIN,24);
 		describe.setFont(font);
-		font = new Font("宋体",Font.PLAIN,26);
+		font = new Font("宋体",Font.PLAIN,22);
 		remark.setFont(font);
 		font = new Font("宋体",Font.PLAIN,20);
 		pageNumber.setFont(font);
-		this.add(describe, new GBC(0,1,1,1).setFill(GBC.BOTH).setWeight(0.1, 0));
+		this.add(describe, new GBC(0,1,1,1).setFill(GBC.BOTH).setWeight(0, 0));
 		int size = questionList.size();
 		quesPanel.setLayout(new GridBagLayout());
 		for(int i = 0; i < size; ++ i){
-			quesPanel.add(questionList.get(i), new GBC(0,i,1,1).setFill(GBC.BOTH).setWeight(0.1, 0));
+			quesPanel.add(questionList.get(i), new GBC(0,i,1,1).setFill(GBC.HORIZONTAL).setWeight(0.1, 0).setAnchor(GBC.WEST));
 		}
 		remarkPanel.setLayout(new GridBagLayout());
 		remarkPanel.add(remark, new GBC(0,0,1,1).setFill(GBC.BOTH).setWeight(0.1, 0));
 		remarkPanel.add(remarkContent, new GBC(1,0,6,1).setFill(GBC.BOTH).setWeight(1, 0));
 		this.add(quesPanel, new GBC(0,2,1,10).setFill(GBC.BOTH).setIpad(200, 300).setWeight(1, 0));
 		this.add(remarkPanel, new GBC(0,12,1,1).setFill(GBC.BOTH).setWeight(0.1, 0));
-		this.add(pageNumber, new GBC(0,13,1,1).setFill(GBC.BOTH).setWeight(0.1, 0));
+		this.add(pageNumber, new GBC(0,13,1,1).setFill(GBC.BOTH).setWeight(0, 0));
 		this.setVisible(true);
 	}
 	public void setFocusListener(){

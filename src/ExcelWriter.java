@@ -17,7 +17,7 @@ public class ExcelWriter {
 	}
 	public ExcelWriter(String s) throws FileNotFoundException{
 		fileName = s;
-		fileOut = new FileOutputStream(fileName);
+		fileOut = new FileOutputStream(fileName, true);
 	}
 	public void newTable(String[] table) throws IOException{
 		wb = new HSSFWorkbook();
