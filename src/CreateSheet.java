@@ -74,7 +74,7 @@ public class CreateSheet extends JFrame{
 				XMLOperator xmlo = new XMLOperator(pageList, groupInfo);
 				try {
 					JFileChooser jfc = new JFileChooser();
-				    jfc.setCurrentDirectory(new File("c:/"));//设置默认打开路径
+				    jfc.setCurrentDirectory(new File("d:/"));//设置默认打开路径
 				    jfc.setDialogType(JFileChooser.SAVE_DIALOG);//设置保存对话框
 				    int index = jfc.showDialog(null, "保存文件");
 				    if (index == JFileChooser.APPROVE_OPTION) {

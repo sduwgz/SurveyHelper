@@ -34,7 +34,10 @@ public class Multi_ChoiseQuestion extends Question{
 	}
 	public void setupUI(){
 		this.setLayout(new GridBagLayout());
-		jl = new JLabel(" " + ID + "." + quesDescribe.split("_")[1]);
+		if(quesDescribe.split("_").length == 2)
+			jl = new JLabel(" " + (ID+1) +". " + quesDescribe.split("_")[1], JLabel.LEFT);
+		else
+			jl = new JLabel(" " + (ID+1) +". " + quesDescribe, JLabel.LEFT);
 		this.add(jl, new GBC(0,0,2,1).setFill(GBC.BOTH).setIpad(200, 30).setWeight(100, 0));
 		for(int i = 0; i < choisesNumber; ++ i){
 			//System.out.println(answers[i].getText());

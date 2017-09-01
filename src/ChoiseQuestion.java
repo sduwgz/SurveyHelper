@@ -46,7 +46,10 @@ public class ChoiseQuestion extends Question{
 		this.setLayout(new GridBagLayout());
 		//this.setBackground(Color.RED);
 		Font font = new Font("ËÎÌו",Font.PLAIN,20);
-		jl = new JLabel("" + (ID + 1) + "." + quesDescribe.split("_")[1]);
+		if(quesDescribe.split("_").length == 2)
+			jl = new JLabel(" " + (ID+1) +". " + quesDescribe.split("_")[1], JLabel.LEFT);
+		else
+			jl = new JLabel(" " + (ID+1) +". " + quesDescribe, JLabel.LEFT);
 		jl.setFont(font);
 		this.add(jl, new GBC(0,0,2,1).setWeight(0, 0).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
 		for(int i = 0; i < choisesNumber; ++ i){

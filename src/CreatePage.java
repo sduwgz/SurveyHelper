@@ -102,7 +102,7 @@ public class CreatePage extends JFrame{
 		//System.out.println(questionNumber);
 		//System.out.println(newQues.quesDescribe);
 		questionList.add(newQues);
-		this.contentPanel.add(newQues, new GBC(0,questionNumber + 3,2,1).setFill(GBC.BOTH).setIpad(300, 20).setWeight(100, 0));
+		this.contentPanel.add(newQues, new GBC(0,questionNumber + 4,2,1).setFill(GBC.BOTH).setIpad(300, 20).setWeight(100, 0));
 		this.contentPanel.revalidate();
 		this.repaint();
 	}
