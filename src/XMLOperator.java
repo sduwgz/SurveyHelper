@@ -42,6 +42,15 @@ public class XMLOperator{
 		
 		return question;
 	}
+	public Element getSet(Document doc, Question curQues){
+		Element question = doc.createElement("question");
+		question.setAttribute("ID", "" + curQues.getID());
+		question.setAttribute("type", "" + curQues.getType());
+		question.setAttribute("describe", curQues.getQuesDescribe());
+		question.setAttribute("set", curQues.getChoises());
+		
+		return question;
+	}
 	public Document newDocument() throws Exception{
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -68,6 +77,9 @@ public class XMLOperator{
 					page.appendChild(question);
 				} else if(curQues.getType() == 2){
 					Element question = getChoise(doc, curQues);
+					page.appendChild(question);
+				} else if(curQues.getType() == 4){
+					Element question = getSet(doc, curQues);
 					page.appendChild(question);
 				}	
 			}
@@ -123,16 +135,20 @@ public class XMLOperator{
 				//System.out.println("ref:¡¡" + ref);
 				String quesDescribe = oneQuestion.getAttributes().getNamedItem("describe").getNodeValue();
 				
-				if(quesType == 1){
+				if(quesType == 1) {
 					String answerSet = oneQuestion.getAttributes().getNamedItem("set").getNodeValue();
 					String minRange = oneQuestion.getAttributes().getNamedItem("min").getNodeValue();
 					String maxRange = oneQuestion.getAttributes().getNamedItem("max").getNodeValue();
 					Question q = new FillinQuestion(ID, quesDescribe, answerSet, minRange, maxRange);
 					questionList.add(q);
-				}else if(quesType == 2){ 
+				} else if(quesType == 2) { 
 					String choises = oneQuestion.getAttributes().getNamedItem("choises").getNodeValue();
 					String jumps = oneQuestion.getAttributes().getNamedItem("jumps").getNodeValue();
 					Question q = new ChoiseQuestion(ID, quesDescribe, choises, jumps);
+					questionList.add(q);
+				} else if(quesType == 4) {
+					String answerSet = oneQuestion.getAttributes().getNamedItem("set").getNodeValue();
+					Question q = new SetQuestion(ID, quesDescribe, answerSet);
 					questionList.add(q);
 				}
 			}
