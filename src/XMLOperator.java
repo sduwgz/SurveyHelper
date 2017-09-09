@@ -47,7 +47,15 @@ public class XMLOperator{
 		question.setAttribute("ID", "" + curQues.getID());
 		question.setAttribute("type", "" + curQues.getType());
 		question.setAttribute("describe", curQues.getQuesDescribe());
-		question.setAttribute("set", curQues.getChoises());
+		question.setAttribute("set", curQues.getAnswerSet());
+		
+		return question;
+	}
+	public Element getDate(Document doc, Question curQues){
+		Element question = doc.createElement("question");
+		question.setAttribute("ID", "" + curQues.getID());
+		question.setAttribute("type", "" + curQues.getType());
+		question.setAttribute("describe", curQues.getQuesDescribe());
 		
 		return question;
 	}
@@ -81,7 +89,10 @@ public class XMLOperator{
 				} else if(curQues.getType() == 4){
 					Element question = getSet(doc, curQues);
 					page.appendChild(question);
-				}	
+				} else if(curQues.getType() == 5){
+					Element question = getDate(doc, curQues);
+					page.appendChild(question);
+				}
 			}
 			pageNodes.appendChild(page);
 		}
@@ -149,6 +160,9 @@ public class XMLOperator{
 				} else if(quesType == 4) {
 					String answerSet = oneQuestion.getAttributes().getNamedItem("set").getNodeValue();
 					Question q = new SetQuestion(ID, quesDescribe, answerSet);
+					questionList.add(q);
+				} else if(quesType == 5) {
+					Question q = new DateQuestion(ID, quesDescribe);
 					questionList.add(q);
 				}
 			}

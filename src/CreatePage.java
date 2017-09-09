@@ -13,6 +13,7 @@ public class CreatePage extends JFrame{
 	JButton addFillin = new JButton("填空题");
 	JButton addChoise = new JButton("选择题");
 	JButton addSet = new JButton("下拉选择题");
+	JButton addDate = new JButton("日期题");
 	JButton undo = new JButton("撤销上一步");
 	JButton finish = new JButton("完成");
 	JLabel pageTitle = new JLabel("页面标题");
@@ -44,6 +45,8 @@ public class CreatePage extends JFrame{
 		controlPanel.add(addFillin);
 		controlPanel.add(addChoise);
 		controlPanel.add(addSet);
+		controlPanel.add(addDate);
+		
 		controlPanel.add(undo);
 		controlPanel.add(finish);
 		contentPanel.setLayout(new GridBagLayout());
@@ -80,6 +83,12 @@ public class CreatePage extends JFrame{
 				createSet();
 			}
 		});
+		addDate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				createDate();
+			}
+		});
 		finish.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -95,8 +104,12 @@ public class CreatePage extends JFrame{
 	public void createChoise(){
 		CreateQuestion cf = new CreateChoiseQues(this);
 	}
+
 	public void createSet(){
 		CreateQuestion cf = new CreateSetQues(this);
+	}
+	public void createDate(){
+		CreateQuestion cf = new CreateDateQues(this);
 	}
 	public void addPagetoSheet(){
 		belogedCS.questionNumber += this.questionNumber;

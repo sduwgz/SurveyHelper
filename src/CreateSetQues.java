@@ -11,10 +11,6 @@ public class CreateSetQues extends CreateQuestion{
 	JTextField fill = new JTextField();
 	JLabel answerSet;
 	JTextField setField;
-	JLabel minNumber;
-	JTextField minField;
-	JLabel maxNumber;
-	JTextField maxField;
 	public CreateSetQues(CreatePage belogedPage) {
 		super(belogedPage);
 		setupUI();
