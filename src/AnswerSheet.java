@@ -17,7 +17,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -151,6 +153,7 @@ public class AnswerSheet extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					submitAll();
+					saveOrigin();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block(done)
 					e1.printStackTrace();
@@ -441,6 +444,33 @@ public class AnswerSheet extends JFrame{
 			System.out.println(remarkList.get(i));
 		}
 		curPage = 0;
+	}
+	private void saveOrigin(){
+		String outString = "";
+		int size = pageList.size();
+		for(int i = 0; i < size; ++ i){
+			int quesNumber = pageList.get(i).questionList.size();
+			outString += "第" + (i + 1) + "页：" + pageList.get(i).title.getText() + "\n\r";
+			
+			for(int j = 0; j < quesNumber; ++ j){
+				outString += pageList.get(i).questionList.get(j).getQuesDescribe() + "\n\r";
+				outString += pageList.get(i).questionList.get(j).getAnswer() + "\n\r";
+			}
+			outString += pageList.get(i).getRemark() + "\n\r";
+			outString += "\n\r";
+		}
+		try {
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-mm-ss");//设置日期格式
+			String date = df.format(new Date());// new Date()为获取当前系统时间
+			String outFileName = "original_sheet_" + researcherID + "_" + date + ".txt";
+			OutputStream origin = new FileOutputStream(outFileName);
+			origin.write(outString.getBytes());
+			origin.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	public void restart(){
 		card.first(pagePanel);
