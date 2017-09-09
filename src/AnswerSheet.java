@@ -232,10 +232,7 @@ public class AnswerSheet extends JFrame{
 		});
 		addWindowListener(new WindowAdapter() {
 	        public void windowClosing(WindowEvent e) {
-	           int i=JOptionPane.showConfirmDialog(null, "确定要退出系统吗？", "退出系统", JOptionPane.YES_NO_OPTION);
-	        if(i==JOptionPane.YES_OPTION){
-	         System.exit(0);
-	        }
+	            exit();
 	        }
 	   });
 	}
@@ -476,6 +473,20 @@ public class AnswerSheet extends JFrame{
 		card.first(pagePanel);
 		loginJTF.setText(researcherID);
 	}
+	public void exit() {
+	    Object[] options = { "确定", "取消" };
+	    JOptionPane pane2 = new JOptionPane("真想退出吗?", JOptionPane.QUESTION_MESSAGE,
+	        JOptionPane.YES_NO_OPTION, null, options, options[1]);
+	    JDialog dialog = pane2.createDialog(this, "警告");
+	    dialog.setVisible(true);
+	    Object selectedValue = pane2.getValue();
+	    if (selectedValue == null || selectedValue == options[1]) {
+	      setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // 这个是关键
+	    } else if (selectedValue == options[0]) {
+	      setDefaultCloseOperation(EXIT_ON_CLOSE);
+	    }
+	  }
+
 	public static void main(String[] args) throws Exception{
 		AnswerSheet as = new AnswerSheet();
 	}
