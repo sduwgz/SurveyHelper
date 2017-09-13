@@ -2,3 +2,5 @@
 *.xml
 *.xls
 *.xlsx
+*.classpath
+*.txt
