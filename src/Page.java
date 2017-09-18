@@ -123,7 +123,19 @@ public class Page extends JPanel{
 		int size = questionList.size();
 		for(int i = 0; i < size; ++ i) {
 			if(!questionList.get(i).submit()) {
-				JOptionPane.showConfirmDialog(this, "请检查第" + (questionList.get(i).getID() + 1) +"题", "填写不规范提示", JOptionPane.OK_CANCEL_OPTION);
+				String errorInfo = "";
+				Question q = questionList.get(i);
+				if(q.getType() == 1) {
+					if(q.getMinRange() != q.getMaxRange()) {
+						errorInfo = "答案为数字，且范围为" + q.getMinRange() + "~" + q.getMaxRange();
+					}
+					else if(q.getAnswerSet() != "") {
+						errorInfo = "答案必须为下面集合中的一个： \n" + q.getAnswerSet();
+					}
+				} else if(q.getType() == 2) {
+					errorInfo = "该选项必须填写选项后的说明框";
+				}
+				JOptionPane.showConfirmDialog(this, errorInfo, "请检查第" + (questionList.get(i).getID() + 1) +"题", JOptionPane.OK_CANCEL_OPTION);
 				return false;
 			}
 		}
