@@ -345,6 +345,7 @@ public class AnswerSheet extends JFrame{
 		    public void eventDispatched(AWTEvent event) {
 		        if (((KeyEvent) event).getID() == KeyEvent.KEY_PRESSED) {
 		        	//((KeyEvent) event).getKeyCode();// 获取按键的code
+		        	/*
 		        	if(((KeyEvent) event).getKeyCode() == KeyEvent.VK_DOWN){
 						System.out.println("key is pressed.");
 						if (pageList.get(curPage - 1).curQuestion < pageList.get(curPage - 1).questionList.size() - 1){
@@ -356,7 +357,9 @@ public class AnswerSheet extends JFrame{
 							int a = -- pageList.get(curPage - 1).curQuestion;
 							pageList.get(curPage - 1).questionList.get(a).getFocus();
 						}
-					} else if(((KeyEvent) event).getKeyCode() == KeyEvent.VK_ENTER){
+					} 
+					*/
+		        	if(((KeyEvent) event).getKeyCode() == KeyEvent.VK_ENTER){
 						System.out.println("key is pressed.");
 						if (pageList.get(curPage - 1).curQuestion < pageList.get(curPage - 1).questionList.size() - 1){
 							int a = ++ pageList.get(curPage - 1).curQuestion;
