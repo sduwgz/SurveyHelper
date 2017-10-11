@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -33,21 +34,24 @@ public class Multi_ChoiseQuestion extends Question{
 		setupUI();
 	}
 	public void setupUI(){
+		Font font = new Font("ËÎÌו",Font.PLAIN,20);
 		this.setLayout(new GridBagLayout());
 		if(quesDescribe.split("_").length == 2)
 			jl = new JLabel(" " + (ID+1) +". " + quesDescribe.split("_")[1], JLabel.LEFT);
 		else
 			jl = new JLabel(" " + (ID+1) +". " + quesDescribe, JLabel.LEFT);
+		jl.setFont(font);
 		this.add(jl, new GBC(0,0,2,1).setFill(GBC.BOTH).setIpad(200, 30).setWeight(100, 0));
 		for(int i = 0; i < choisesNumber; ++ i){
 			//System.out.println(answers[i].getText());
-			jcbs[i] = new JCheckBox("" + i + ": " + choises.get(i));
+			jcbs[i] = new JCheckBox("" + ((char)('A' + i)) + ": " + choises.get(i));
+			jcbs[i].setFont(font);
 			remarks[i] = new JTextField();
 			if(choises.get(i).endsWith("#")){
 				this.add(jcbs[i], new GBC(0,i+1,1,1).setFill(GBC.BOTH).setIpad(100, 30).setWeight(100, 0));
 				this.add(remarks[i], new GBC(1,i+1,1,1).setFill(GBC.BOTH).setIpad(100, 30).setWeight(100, 0));
 			} else {
-				this.add(jrbs[i], new GBC(0,i+1,2,1).setFill(GBC.BOTH).setIpad(100, 30).setWeight(100, 0));
+				this.add(jcbs[i], new GBC(0,i+1,2,1).setFill(GBC.BOTH).setIpad(100, 30).setWeight(100, 0));
 			}
 		}
 		this.setVisible(true);

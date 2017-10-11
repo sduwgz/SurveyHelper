@@ -81,7 +81,7 @@ public class AnswerSheet extends JFrame{
 				System.out.println("文件:"+file.getAbsolutePath());
 				JOptionPane.showConfirmDialog(this, "文件 "+ file.getAbsolutePath() + " 不是问卷", "文件错误提示", JOptionPane.OK_CANCEL_OPTION);
 			}
-		}	
+		}
 	}
 	public void setupUI(){
 		this.setSize(1200, 700);

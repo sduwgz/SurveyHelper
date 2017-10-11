@@ -12,6 +12,7 @@ public class CreatePage extends JFrame{
 	private static int createCount = 0;
 	JButton addFillin = new JButton("填空题");
 	JButton addChoise = new JButton("选择题");
+	JButton addMulti = new JButton("多项选择题");
 	JButton addSet = new JButton("下拉选择题");
 	JButton addDate = new JButton("日期题");
 	JButton undo = new JButton("撤销上一步");
@@ -44,6 +45,7 @@ public class CreatePage extends JFrame{
 		controlPanel.setLayout(new GridLayout(10, 1));
 		controlPanel.add(addFillin);
 		controlPanel.add(addChoise);
+		controlPanel.add(addMulti);
 		controlPanel.add(addSet);
 		controlPanel.add(addDate);
 		
@@ -77,6 +79,12 @@ public class CreatePage extends JFrame{
 				createChoise();
 			}
 		});
+		addMulti.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				createMulti();
+			}
+		});
 		addSet.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -104,7 +112,9 @@ public class CreatePage extends JFrame{
 	public void createChoise(){
 		CreateQuestion cf = new CreateChoiseQues(this);
 	}
-
+	public void createMulti(){
+		CreateQuestion cf = new CreateMultiQues(this);
+	}
 	public void createSet(){
 		CreateQuestion cf = new CreateSetQues(this);
 	}

@@ -42,6 +42,15 @@ public class XMLOperator{
 		
 		return question;
 	}
+	public Element getMultiChoise(Document doc, Question curQues){
+		Element question = doc.createElement("question");
+		question.setAttribute("ID", "" + curQues.getID());
+		question.setAttribute("type", "" + curQues.getType());
+		question.setAttribute("describe", curQues.getQuesDescribe());
+		question.setAttribute("choises", curQues.getChoises());
+		
+		return question;
+	}
 	public Element getSet(Document doc, Question curQues){
 		Element question = doc.createElement("question");
 		question.setAttribute("ID", "" + curQues.getID());
@@ -85,6 +94,9 @@ public class XMLOperator{
 					page.appendChild(question);
 				} else if(curQues.getType() == 2){
 					Element question = getChoise(doc, curQues);
+					page.appendChild(question);
+				} else if(curQues.getType() == 3){
+					Element question = getMultiChoise(doc, curQues);
 					page.appendChild(question);
 				} else if(curQues.getType() == 4){
 					Element question = getSet(doc, curQues);
@@ -156,6 +168,10 @@ public class XMLOperator{
 					String choises = oneQuestion.getAttributes().getNamedItem("choises").getNodeValue();
 					String jumps = oneQuestion.getAttributes().getNamedItem("jumps").getNodeValue();
 					Question q = new ChoiseQuestion(ID, quesDescribe, choises, jumps);
+					questionList.add(q);
+				} else if(quesType == 3) { 
+					String choises = oneQuestion.getAttributes().getNamedItem("choises").getNodeValue();
+					Question q = new Multi_ChoiseQuestion(ID, quesDescribe, choises);
 					questionList.add(q);
 				} else if(quesType == 4) {
 					String answerSet = oneQuestion.getAttributes().getNamedItem("set").getNodeValue();

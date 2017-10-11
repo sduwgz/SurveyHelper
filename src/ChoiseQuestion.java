@@ -51,7 +51,7 @@ public class ChoiseQuestion extends Question{
 		else
 			jl = new JLabel(" " + (ID+1) +". " + quesDescribe, JLabel.LEFT);
 		jl.setFont(font);
-		this.add(jl, new GBC(0,0,2,1).setWeight(0, 0).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
+		this.add(jl, new GBC(0,0,1,1).setWeight(0, 0).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
 		for(int i = 0; i < choisesNumber; ++ i){
 			//System.out.println(answers[i].getText());
 			jrbs[i] = new JRadioButton("" + ((char)('A' + i)) + ": " + choises.get(i));
@@ -62,7 +62,7 @@ public class ChoiseQuestion extends Question{
 				this.add(jrbs[i], new GBC(0,i+1,1,1).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL).setWeight(0, 0));
 				this.add(remarks[i], new GBC(1,i+1,1,1).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL).setIpad(100, 0).setWeight(0, 0));
 			} else {
-				this.add(jrbs[i], new GBC(0,i+1,2,1).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL).setWeight(0, 0));
+				this.add(jrbs[i], new GBC(0,i+1,1,1).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL).setWeight(0, 0));
 			}
 		}
 		this.setVisible(true);
