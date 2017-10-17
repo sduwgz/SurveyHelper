@@ -18,6 +18,7 @@ public class SetQuestion extends Question{
 				answerSet.add(s);
 			}
 		jcb = new JComboBox(answerSet.toArray());
+		jcb.setAutoscrolls(true);
 		setupUI();
 	}
 	

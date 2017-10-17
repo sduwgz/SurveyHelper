@@ -48,10 +48,10 @@ public class Multi_ChoiseQuestion extends Question{
 			jcbs[i].setFont(font);
 			remarks[i] = new JTextField();
 			if(choises.get(i).endsWith("#")){
-				this.add(jcbs[i], new GBC(0,i+1,1,1).setFill(GBC.BOTH).setIpad(100, 30).setWeight(100, 0));
-				this.add(remarks[i], new GBC(1,i+1,1,1).setFill(GBC.BOTH).setIpad(100, 30).setWeight(100, 0));
+				this.add(jcbs[i], new GBC(0,i+1,1,1).setIpad(10, 10).setWeight(0, 0));
+				this.add(remarks[i], new GBC(1,i+1,1,1).setIpad(10, 10).setWeight(0.1, 0));
 			} else {
-				this.add(jcbs[i], new GBC(0,i+1,2,1).setFill(GBC.BOTH).setIpad(100, 30).setWeight(100, 0));
+				this.add(jcbs[i], new GBC(0,i+1,2,1).setIpad(10, 10).setWeight(0, 0));
 			}
 		}
 		this.setVisible(true);
