@@ -41,17 +41,17 @@ public class Multi_ChoiseQuestion extends Question{
 		else
 			jl = new JLabel(" " + (ID+1) +". " + quesDescribe, JLabel.LEFT);
 		jl.setFont(font);
-		this.add(jl, new GBC(0,0,2,1).setFill(GBC.BOTH).setIpad(200, 30).setWeight(100, 0));
+		this.add(jl, new GBC(0,0,2,1).setFill(GBC.BOTH).setIpad(10, 20).setWeight(0.1, 0));
 		for(int i = 0; i < choisesNumber; ++ i){
 			//System.out.println(answers[i].getText());
 			jcbs[i] = new JCheckBox("" + ((char)('A' + i)) + ": " + choises.get(i));
 			jcbs[i].setFont(font);
 			remarks[i] = new JTextField();
 			if(choises.get(i).endsWith("#")){
-				this.add(jcbs[i], new GBC(0,i+1,1,1).setIpad(10, 10).setWeight(0, 0));
-				this.add(remarks[i], new GBC(1,i+1,1,1).setIpad(10, 10).setWeight(0.1, 0));
+				this.add(jcbs[i], new GBC(0,i+1,1,1).setIpad(30, 10).setAnchor(GBC.WEST).setWeight(0, 0));
+				this.add(remarks[i], new GBC(1,i+1,1,1).setIpad(100, 10).setWeight(0.1, 0));
 			} else {
-				this.add(jcbs[i], new GBC(0,i+1,2,1).setIpad(10, 10).setWeight(0, 0));
+				this.add(jcbs[i], new GBC(0,i+1,2,1).setIpad(30, 10).setAnchor(GBC.WEST).setWeight(0, 0));
 			}
 		}
 		this.setVisible(true);
@@ -64,12 +64,16 @@ public class Multi_ChoiseQuestion extends Question{
 	}
 	public boolean submit(){
 		if(!checkAnswer()) return false;
-		this.answer = "";
+		String allAnswer = "";
 		for(int i = 0; i < choisesNumber; ++ i){
 			if(jcbs[i].isSelected()){
-				this.answer = this.answer + i + "_" + remarks[i].getText() + " ";
+				if(choises.get(i).endsWith("#"))
+					allAnswer += (char)('A' + i) + remarks[i].getText();
+				else
+					allAnswer += (char)('A' + i) + jcbs[i].getText();
 			}
 		}
+		this.setAnswer(allAnswer);
 		return true;
 	}
 }

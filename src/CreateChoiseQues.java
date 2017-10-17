@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class CreateChoiseQues extends CreateQuestion{
-	int choisesCount = 6;
+	int choisesCount = 10;
 	Question question;
 	JTextField fill = new JTextField();
 	JLabel[] choisesNumber = new JLabel[choisesCount];

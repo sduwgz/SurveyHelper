@@ -51,7 +51,7 @@ public class ChoiseQuestion extends Question{
 		else
 			jl = new JLabel(" " + (ID+1) +". " + quesDescribe, JLabel.LEFT);
 		jl.setFont(font);
-		this.add(jl, new GBC(0,0,1,1).setWeight(0, 0).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
+		this.add(jl, new GBC(0,0,1,1).setWeight(0, 0).setAnchor(GBC.WEST).setIpad(10, 20));
 		for(int i = 0; i < choisesNumber; ++ i){
 			//System.out.println(answers[i].getText());
 			jrbs[i] = new JRadioButton("" + ((char)('A' + i)) + ": " + choises.get(i));
@@ -59,10 +59,10 @@ public class ChoiseQuestion extends Question{
 			remarks[i] = new JTextField();
 			bg.add(jrbs[i]);
 			if(choises.get(i).endsWith("#")){
-				this.add(jrbs[i], new GBC(0,i+1,1,1).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL).setWeight(0, 0));
-				this.add(remarks[i], new GBC(1,i+1,1,1).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL).setIpad(100, 0).setWeight(0, 0));
+				this.add(jrbs[i], new GBC(0,i+1,1,1).setIpad(30, 10).setAnchor(GBC.WEST).setWeight(0, 0));
+				this.add(remarks[i], new GBC(1,i+1,1,1).setAnchor(GBC.WEST).setIpad(100, 0).setWeight(0, 0));
 			} else {
-				this.add(jrbs[i], new GBC(0,i+1,1,1).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL).setWeight(0, 0));
+				this.add(jrbs[i], new GBC(0,i+1,1,1).setIpad(30, 10).setAnchor(GBC.WEST).setWeight(0, 0));
 			}
 		}
 		this.setVisible(true);
