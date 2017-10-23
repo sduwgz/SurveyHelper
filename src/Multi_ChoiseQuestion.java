@@ -48,17 +48,17 @@ public class Multi_ChoiseQuestion extends Question{
 			jcbs[i].setFont(font);
 			remarks[i] = new JTextField();
 			if(choises.get(i).endsWith("#")){
-				this.add(jcbs[i], new GBC(0,i+1,1,1).setIpad(30, 10).setAnchor(GBC.WEST).setWeight(0, 0));
-				this.add(remarks[i], new GBC(1,i+1,1,1).setIpad(100, 10).setWeight(0.1, 0));
+				this.add(jcbs[i], new GBC(0,i+1,1,1).setIpad(30, 0).setAnchor(GBC.WEST).setWeight(0, 0));
+				this.add(remarks[i], new GBC(1,i+1,1,1).setIpad(100, 0).setWeight(0.1, 0));
 			} else {
-				this.add(jcbs[i], new GBC(0,i+1,2,1).setIpad(30, 10).setAnchor(GBC.WEST).setWeight(0, 0));
+				this.add(jcbs[i], new GBC(0,i+1,2,1).setIpad(30, 0).setAnchor(GBC.WEST).setWeight(0, 0));
 			}
 		}
 		this.setVisible(true);
 	}
 	public boolean checkAnswer(){
 		for(int i = 0; i < choisesNumber; ++ i){
-			if(choises.get(i).endsWith("#") && remarks[i].getText().length() == 0) return false;
+			if(jcbs[i].isSelected() && choises.get(i).endsWith("#") && remarks[i].getText().length() == 0) return false;
 		}
 		return true;
 	}

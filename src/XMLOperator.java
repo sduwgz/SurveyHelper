@@ -137,6 +137,7 @@ public class XMLOperator{
 		int pageNumber = pageNodes.getLength();
 		//System.out.println(pageNumber);
 		for(int i = 0; i < pageNumber; ++ i){
+			System.out.println(i);
 			ArrayList<Question> questionList = new ArrayList<Question>();
 			Node onePage = pageNodes.item(i);
 			//System.out.println(onePage.toString());
@@ -150,6 +151,7 @@ public class XMLOperator{
 			NodeList questionNodes = onePage.getChildNodes();
 			int questionNumber = questionNodes.getLength();
 			for(int j = 0; j < questionNumber; ++ j){
+				System.out.println(j);
 				Node oneQuestion = questionNodes.item(j);
 				int quesType = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("type").getNodeValue());
 				int ID = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("ID").getNodeValue());

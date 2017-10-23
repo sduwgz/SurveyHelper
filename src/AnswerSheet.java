@@ -117,7 +117,8 @@ public class AnswerSheet extends JFrame{
 		this.add(groupPanel, new GBC(0, 0, 10, 1).setFill(GBC.BOTH).setWeight(0.1, 0.1));
 		this.add(refPanel, new GBC(0, 1, 10, 2).setFill(GBC.BOTH).setWeight(0, 0));
 		this.add(pagePanel, new GBC(0, 3, 10, 9).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 100, 0, 100));
-		this.add(controlPanel, new GBC(0, 12, 10, 1).setFill(GBC.BOTH).setWeight(0, 0));
+		//this.add(pagePanel, new GBC(0, 3, 10, 9).setFill(GBC.BOTH).setWeight(1, 1));
+		this.add(controlPanel, new GBC(0, 12, 10, 1).setFill(GBC.BOTH).setIpad(10, 10).setWeight(0, 0));
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		 
 		this.setVisible(true);
