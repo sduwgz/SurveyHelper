@@ -68,9 +68,9 @@ public class Multi_ChoiseQuestion extends Question{
 		for(int i = 0; i < choisesNumber; ++ i){
 			if(jcbs[i].isSelected()){
 				if(choises.get(i).endsWith("#"))
-					allAnswer += (char)('A' + i) + remarks[i].getText();
+					allAnswer += jcbs[i].getText() + "_" + remarks[i].getText() + "\n\r";
 				else
-					allAnswer += (char)('A' + i) + jcbs[i].getText();
+					allAnswer += jcbs[i].getText() + "\n\r";
 			}
 		}
 		this.setAnswer(allAnswer);
