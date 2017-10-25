@@ -137,7 +137,9 @@ public class Page extends JPanel{
 						errorInfo = "答案必须为下面集合中的一个： \n" + q.getAnswerSet();
 					}
 				} else if(q.getType() == 2) {
-					errorInfo = "该选项必须填写选项后的说明框";
+					errorInfo = "必须选择一项，如果选择需要注明的选项必须填写选项后的说明框";
+				} else if(q.getType() == 4) {
+					errorInfo = "至少选择一项，如果选择需要注明的选项必须填写选项后的说明框";
 				}
 				JOptionPane.showConfirmDialog(this, errorInfo, "请检查第" + (questionList.get(i).getID() + 1) +"题", JOptionPane.OK_CANCEL_OPTION);
 				return false;

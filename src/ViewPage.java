@@ -33,7 +33,7 @@ public class ViewPage extends JFrame{
 	}
 	private void setupUI(){
 		this.setLayout(new GridBagLayout());
-		this.setSize(600, 800);
+		this.setSize(800, 600);
 		contentPanel.setLayout(new GridBagLayout());
 		scrollPanel.setVerticalScrollBarPolicy( 
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);

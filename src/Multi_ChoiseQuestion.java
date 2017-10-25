@@ -7,15 +7,13 @@ import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class Multi_ChoiseQuestion extends Question{
-	//TODO
-	//Class Question is a JPanel. Add JLabel, JButton, JTextField into this Class.
-	//Finish setupUI().
-	//Finish submit(). 
-	int choisesNumber = 0;
 	
+	int choisesNumber = 0;
+	JTextArea jta = new JTextArea();
 	public Multi_ChoiseQuestion(int ID, String quesDescribe) {
 		super(ID, quesDescribe);
 		this.quesType = 3;
@@ -41,7 +39,12 @@ public class Multi_ChoiseQuestion extends Question{
 		else
 			jl = new JLabel(" " + (ID+1) +". " + quesDescribe, JLabel.LEFT);
 		jl.setFont(font);
-		this.add(jl, new GBC(0,0,2,1).setFill(GBC.BOTH).setIpad(10, 20).setWeight(0.1, 0));
+		jta.setText(jl.getText());
+		jta.setEditable(false);
+		jta.setLineWrap(true);
+		jta.setWrapStyleWord(true);
+		jta.setFont(font);
+		this.add(jta, new GBC(0,0,2,1).setFill(GBC.BOTH).setIpad(10, 20).setWeight(0.1, 0));
 		for(int i = 0; i < choisesNumber; ++ i){
 			//System.out.println(answers[i].getText());
 			jcbs[i] = new JCheckBox("" + ((char)('A' + i)) + ": " + choises.get(i));
