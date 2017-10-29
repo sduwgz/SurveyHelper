@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import javax.swing.*;
 public class SetQuestion extends Question{
 	JComboBox jcb;
-	public SetQuestion(int ID, String quesDescribe) {
-		super(ID, quesDescribe);
+	public SetQuestion(int ID, String quesDescribe, String ans) {
+		super(ID, quesDescribe, ans);
 		this.quesType = 4;
 		setupUI();
 	}
-	public SetQuestion(int ID, String quesDescribe, String setString) {
-		super(ID, quesDescribe);
+	public SetQuestion(int ID, String quesDescribe, String ans, String setString) {
+		super(ID, quesDescribe, ans);
 		this.quesType = 4;
 		if(setString.split(",").length > 1)
 			for(String s : setString.split(",")){
@@ -33,7 +33,12 @@ public class SetQuestion extends Question{
 		this.setLayout(new GridLayout(1, 2));
 		this.add(jl);
 		this.add(jcb);
-		
+		if(answer != "") {
+			for(int i = 0; i < answerSet.size(); ++ i) {
+				if(answerSet.get(i) == answer)
+					jcb.setSelectedIndex(i);
+			}
+		}
 		this.setVisible(true);
 	}
 	public void setAnswerSet(String answerSet){

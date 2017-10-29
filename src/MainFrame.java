@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class MainFrame extends JFrame{
-	JButton newSheet, loadSheet;
+	JButton newSheet, loadSheet, unfinishedSheet;
 	JPanel jp;
 	public MainFrame(){
 		setupUI();
@@ -15,13 +15,15 @@ public class MainFrame extends JFrame{
 	public void setupUI(){
 		newSheet = new JButton("新建问卷");
 		loadSheet = new JButton("载入问卷");
+		unfinishedSheet = new JButton("未完成问卷");
 		jp = new JPanel();
 		jp.add(newSheet);
 	  	jp.add(loadSheet);
+	  	jp.add(unfinishedSheet);
 	  	this.add(jp);
-	  	this.setLayout(new GridLayout(2,1));
+	  	this.setLayout(new GridLayout(3,1));
 	  	this.setTitle("问卷调查系统");
-	  	this.setSize(300,200);
+	  	this.setSize(400,150);
 	  	this.setLocation(200, 150);
 	  	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	  	this.setVisible(true);
@@ -38,14 +40,24 @@ public class MainFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					AnswerSheet as = new AnswerSheet();
+					AnswerSheet as = new AnswerSheet(true);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
-		
+		unfinishedSheet.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					AnswerSheet as = new AnswerSheet(false);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 	public static void setFont(){
 		Font font = new Font("宋体",Font.PLAIN,18);

@@ -69,7 +69,7 @@ public class CreateMultiQues extends CreateQuestion{
 					}
 				}
 				String choiseString = String.join(",", choises);
-				question = new Multi_ChoiseQuestion(0, fill.getText(), choiseString);
+				question = new Multi_ChoiseQuestion(0, fill.getText(), "", choiseString);
 				question.ID = belogedPage.questionNumber;
 				addQuestiontoPage();
 				cancel();

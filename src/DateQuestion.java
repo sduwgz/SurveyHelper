@@ -13,8 +13,8 @@ import com.eltima.components.ui.DatePicker;
 public class DateQuestion extends Question{
 	DatePicker datepick;
 
-	public DateQuestion(int ID, String quesDescribe) {
-		super(ID, quesDescribe);
+	public DateQuestion(int ID, String quesDescribe, String ans) {
+		super(ID, quesDescribe, ans);
 		this.quesType = 5;
 		datepick = new DatePicker();
 		String DefaultFormat = "yyyy-MM-dd";

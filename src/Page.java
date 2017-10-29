@@ -17,6 +17,7 @@ public class Page extends JPanel{
 	int curQuestion = 0;
 	int nextPage = 0;
 	int prePage = 0;
+	boolean finished = false;
 	String refQues = "";
 	JLabel pageNumber = new JLabel();
 	JLabel title = new JLabel();
@@ -80,6 +81,8 @@ public class Page extends JPanel{
 		int size = questionList.size();
 		quesPanel.setLayout(new GridBagLayout());
 		for(int i = 0; i < size; ++ i){
+			int qtype = questionList.get(i).getType();
+			if(i % 2 == 1 && (qtype == 1 || qtype == 4)) questionList.get(i).setBackground(Color.LIGHT_GRAY);
 			quesPanel.add(questionList.get(i), new GBC(0,i,1,1).setFill(GBC.HORIZONTAL).setWeight(0.1, 0).setAnchor(GBC.WEST));
 		}
 		remarkPanel.setLayout(new GridBagLayout());
@@ -138,7 +141,7 @@ public class Page extends JPanel{
 					}
 				} else if(q.getType() == 2) {
 					errorInfo = "必须选择一项，如果选择需要注明的选项必须填写选项后的说明框";
-				} else if(q.getType() == 4) {
+				} else if(q.getType() == 3) {
 					errorInfo = "至少选择一项，如果选择需要注明的选项必须填写选项后的说明框";
 				}
 				JOptionPane.showConfirmDialog(this, errorInfo, "请检查第" + (questionList.get(i).getID() + 1) +"题", JOptionPane.OK_CANCEL_OPTION);
@@ -151,6 +154,7 @@ public class Page extends JPanel{
 			}
 		}
 		this.setRemark();
+		this.finished = true;
 		return true;
 	}
 	public void addQuestion(Question newQuestion){
@@ -172,6 +176,9 @@ public class Page extends JPanel{
 	}
 	private void setRemark(){
 		this.remarkString = remarkContent.getText();
+	}
+	public boolean isFinished(){
+		return finished;
 	}
 	
 }

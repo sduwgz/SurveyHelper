@@ -30,6 +30,7 @@ public class XMLOperator{
 		question.setAttribute("set", curQues.getAnswerSet());
 		question.setAttribute("min", curQues.getMinRange());
 		question.setAttribute("max", "" + curQues.getMaxRange());
+		question.setAttribute("answer", "" + curQues.getAnswer());
 		return question;
 	}
 	public Element getChoise(Document doc, Question curQues){
@@ -39,7 +40,7 @@ public class XMLOperator{
 		question.setAttribute("describe", curQues.getQuesDescribe());
 		question.setAttribute("choises", curQues.getChoises());
 		question.setAttribute("jumps", curQues.getJumps());
-		
+		question.setAttribute("answer", "" + curQues.getAnswer());
 		return question;
 	}
 	public Element getMultiChoise(Document doc, Question curQues){
@@ -48,7 +49,7 @@ public class XMLOperator{
 		question.setAttribute("type", "" + curQues.getType());
 		question.setAttribute("describe", curQues.getQuesDescribe());
 		question.setAttribute("choises", curQues.getChoises());
-		
+		question.setAttribute("answer", "" + curQues.getAnswer());
 		return question;
 	}
 	public Element getSet(Document doc, Question curQues){
@@ -57,7 +58,7 @@ public class XMLOperator{
 		question.setAttribute("type", "" + curQues.getType());
 		question.setAttribute("describe", curQues.getQuesDescribe());
 		question.setAttribute("set", curQues.getAnswerSet());
-		
+		question.setAttribute("answer", "" + curQues.getAnswer());
 		return question;
 	}
 	public Element getDate(Document doc, Question curQues){
@@ -65,7 +66,7 @@ public class XMLOperator{
 		question.setAttribute("ID", "" + curQues.getID());
 		question.setAttribute("type", "" + curQues.getType());
 		question.setAttribute("describe", curQues.getQuesDescribe());
-		
+		question.setAttribute("answer", "" + curQues.getAnswer());
 		return question;
 	}
 	public Document newDocument() throws Exception{
@@ -119,7 +120,7 @@ public class XMLOperator{
 		StreamResult result = new StreamResult(new File(fileName));
 		t.transform(source, result);
 	}
-	public AnswerSheet reader(String fileName) throws Exception{
+	public AnswerSheet reader(String fileName, boolean fresh) throws Exception{
 		ArrayList<Page> pageList = new ArrayList<Page>();
 		ArrayList<Group> groupList = new ArrayList<Group>();
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -155,6 +156,9 @@ public class XMLOperator{
 				Node oneQuestion = questionNodes.item(j);
 				int quesType = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("type").getNodeValue());
 				int ID = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("ID").getNodeValue());
+				String ans = "";
+				if(!fresh)
+					ans = oneQuestion.getAttributes().getNamedItem("answer").getNodeValue();
 				//int ref = Integer.parseInt(oneQuestion.getAttributes().getNamedItem("ref").getNodeValue());
 				//System.out.println("ID:¡¡" + ID);
 				//System.out.println("ref:¡¡" + ref);
@@ -164,23 +168,23 @@ public class XMLOperator{
 					String answerSet = oneQuestion.getAttributes().getNamedItem("set").getNodeValue();
 					String minRange = oneQuestion.getAttributes().getNamedItem("min").getNodeValue();
 					String maxRange = oneQuestion.getAttributes().getNamedItem("max").getNodeValue();
-					Question q = new FillinQuestion(ID, quesDescribe, answerSet, minRange, maxRange);
+					Question q = new FillinQuestion(ID, quesDescribe, ans, answerSet, minRange, maxRange);
 					questionList.add(q);
 				} else if(quesType == 2) { 
 					String choises = oneQuestion.getAttributes().getNamedItem("choises").getNodeValue();
 					String jumps = oneQuestion.getAttributes().getNamedItem("jumps").getNodeValue();
-					Question q = new ChoiseQuestion(ID, quesDescribe, choises, jumps);
+					Question q = new ChoiseQuestion(ID, quesDescribe, ans, choises, jumps);
 					questionList.add(q);
 				} else if(quesType == 3) { 
 					String choises = oneQuestion.getAttributes().getNamedItem("choises").getNodeValue();
-					Question q = new Multi_ChoiseQuestion(ID, quesDescribe, choises);
+					Question q = new Multi_ChoiseQuestion(ID, quesDescribe, ans, choises);
 					questionList.add(q);
 				} else if(quesType == 4) {
 					String answerSet = oneQuestion.getAttributes().getNamedItem("set").getNodeValue();
-					Question q = new SetQuestion(ID, quesDescribe, answerSet);
+					Question q = new SetQuestion(ID, quesDescribe, ans, answerSet);
 					questionList.add(q);
 				} else if(quesType == 5) {
-					Question q = new DateQuestion(ID, quesDescribe);
+					Question q = new DateQuestion(ID, quesDescribe, ans);
 					questionList.add(q);
 				}
 			}
@@ -208,6 +212,6 @@ public class XMLOperator{
 		XMLOperator xmlo = new XMLOperator();
 		//Document doc = xmlo.newDocument();
 		//xmlo.writer(doc, "output.xml");
-		AnswerSheet as = xmlo.reader("output.xml");
+		AnswerSheet as = xmlo.reader("output.xml", true);
 	}
 }

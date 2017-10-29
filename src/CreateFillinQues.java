@@ -68,7 +68,7 @@ public class CreateFillinQues extends CreateQuestion{
 		confirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				question = new FillinQuestion(belogedPage.questionNumber, fill.getText(), setField.getText(), minField.getText(), maxField.getText());
+				question = new FillinQuestion(belogedPage.questionNumber, fill.getText(), "", setField.getText(), minField.getText(), maxField.getText());
 				
 				addQuestiontoPage();
 				cancel();

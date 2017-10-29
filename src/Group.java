@@ -1,9 +1,11 @@
 import java.awt.Color;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Group extends JLabel{
+public class Group extends JButton{
+	public String groupInfo;
 	public String name;
 	public int startPage;
 	public int endPage;
@@ -15,6 +17,7 @@ public class Group extends JLabel{
 	}
 	public Group(String group){
 		//group: Name-start-end
+		this.groupInfo = group;
 		this.name = group.split("-")[0];
 		this.startPage = Integer.parseInt(group.split("-")[1]);
 		this.endPage = Integer.parseInt(group.split("-")[2]);

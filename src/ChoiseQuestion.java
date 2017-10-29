@@ -16,13 +16,13 @@ public class ChoiseQuestion extends Question{
 	//Finish submit(). 
 	int choisesNumber = 0;
 	
-	public ChoiseQuestion(int ID, String quesDescribe) {
-		super(ID, quesDescribe);
+	public ChoiseQuestion(int ID, String quesDescribe, String ans) {
+		super(ID, quesDescribe, ans);
 		this.quesType = 2;
 		//setupUI();
 	}
-	public ChoiseQuestion(int ID, String quesDescribe, String choisesString){
-		this(ID, quesDescribe);		
+	public ChoiseQuestion(int ID, String quesDescribe, String ans, String choisesString){
+		this(ID, quesDescribe, ans);	
 		if(choisesString.split(",").length > 1)
 			for(String s : choisesString.split(",")){
 				choises.add(s);
@@ -33,8 +33,8 @@ public class ChoiseQuestion extends Question{
 		remarks = new JTextField[choisesNumber];
 		setupUI();
 	}
-	public ChoiseQuestion(int ID, String quesDescribe, String choisesString, String jumpsString){
-		this(ID, quesDescribe, choisesString);
+	public ChoiseQuestion(int ID, String quesDescribe, String ans, String choisesString, String jumpsString){
+		this(ID, quesDescribe, ans, choisesString);
 		if(jumpsString.split(",").length > 1) {
 			for(String s : jumpsString.split(",")) {
 				jumps.add(s);
@@ -63,6 +63,16 @@ public class ChoiseQuestion extends Question{
 				this.add(remarks[i], new GBC(1,i+1,1,1).setAnchor(GBC.WEST).setIpad(100, 0).setWeight(0, 0));
 			} else {
 				this.add(jrbs[i], new GBC(0,i+1,1,1).setIpad(30, 10).setAnchor(GBC.WEST).setWeight(0, 0));
+			}
+		}
+		if(answer != "") {
+			System.out.println(answer);
+			String ch = answer.split(":")[0];
+			int anw = ch.charAt(0) - 'A';
+			jrbs[anw].setSelected(true);
+			if(answer.split("_").length == 2) {
+				String statement = answer.split("_")[1];
+				remarks[anw].setText(statement);
 			}
 		}
 		this.setVisible(true);

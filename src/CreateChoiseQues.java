@@ -75,7 +75,7 @@ public class CreateChoiseQues extends CreateQuestion{
 				}
 				String choiseString = String.join(",", choises);
 				String jumpString = String.join(",", jumps);
-				question = new ChoiseQuestion(0, fill.getText(), choiseString, jumpString);
+				question = new ChoiseQuestion(0, fill.getText(), "", choiseString, jumpString);
 				question.ID = belogedPage.questionNumber;
 				addQuestiontoPage();
 				cancel();

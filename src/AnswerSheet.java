@@ -28,6 +28,7 @@ public class AnswerSheet extends JFrame{
 	int curPage = 0;
 	int curGroup = 0;
 	String researcherID = "";
+	boolean fresh = true;
 	JTextField loginJTF = new JTextField(researcherID);
 	JButton nextPage = new JButton("下一页");
 	JButton prePage = new JButton("上一页");
@@ -53,17 +54,17 @@ public class AnswerSheet extends JFrame{
 		setupUI();
 		setupListener();
 	}
-	public AnswerSheet(String fileName) {
+	public AnswerSheet(String fileName, boolean b) {
 		XMLOperator xmlo = new XMLOperator();
 		try {
-			AnswerSheet as = xmlo.reader(fileName);
+			AnswerSheet as = xmlo.reader(fileName, b);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			JOptionPane.showConfirmDialog(this, "问卷文件不合法", "文件错误提示", JOptionPane.OK_CANCEL_OPTION);
 			e.printStackTrace();
 		}
 	}
-	public AnswerSheet(){
+	public AnswerSheet(boolean b){
 		JFileChooser jfc=new JFileChooser();
 		jfc.setCurrentDirectory(new File("d:/"));
 		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -72,7 +73,7 @@ public class AnswerSheet extends JFrame{
 			File file=jfc.getSelectedFile();
 			if(file.getAbsolutePath().endsWith(".xml")) {
 				try {
-					AnswerSheet as = new AnswerSheet("" + file.getAbsolutePath());
+					AnswerSheet as = new AnswerSheet("" + file.getAbsolutePath(), b);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -266,6 +267,9 @@ public class AnswerSheet extends JFrame{
 		startPage.add(login, new GBC(0, 10, 5, 1).setWeight(0.1, 0.1).setInsets(10, 50, 0, 0));
 		startPage.add(loginJTF, new GBC(5, 10, 5, 1).setAnchor(GBC.WEST).setFill(GBC.BOTH).setWeight(1, 0.1).setInsets(10, 0, 0, 100));
 		startPage.add(startButton, new GBC(0, 11, 10, 1).setFill(GBC.BOTH).setWeight(0.3, 0.1).setInsets(10, 100, 0, 150));
+	}
+	public void updateGroup(){
+		
 	}
 	public void initEndPage(){
 		endPage.setLayout(new BorderLayout());
@@ -478,20 +482,35 @@ public class AnswerSheet extends JFrame{
 		loginJTF.setText(researcherID);
 	}
 	public void exit() {
-	    Object[] options = { "确定", "取消" };
+	    Object[] options = { "直接退出", "保存并退出", "取消" };
 	    JOptionPane pane2 = new JOptionPane("真想退出吗?", JOptionPane.QUESTION_MESSAGE,
 	        JOptionPane.YES_NO_OPTION, null, options, options[1]);
 	    JDialog dialog = pane2.createDialog(this, "警告");
 	    dialog.setVisible(true);
 	    Object selectedValue = pane2.getValue();
-	    if (selectedValue == null || selectedValue == options[1]) {
+	    if (selectedValue == null || selectedValue == options[2]) {
 	      setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // 这个是关键
 	    } else if (selectedValue == options[0]) {
 	      setDefaultCloseOperation(EXIT_ON_CLOSE);
+	    } else {
+	    	ArrayList<String> allGroup = new ArrayList<String>();
+			for(Group g : groupList) {
+				allGroup.add(g.groupInfo);
+			}
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-mm-ss");//设置日期格式
+			String date = df.format(new Date());// new Date()为获取当前系统时间
+			String outFileName = "未完成问卷" + "_" + date + ".xml";
+			XMLOperator xmlo = new XMLOperator(pageList, String.join(",", allGroup));
+			try {
+				xmlo.writer(outFileName);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    }
 	  }
 
 	public static void main(String[] args) throws Exception{
-		AnswerSheet as = new AnswerSheet();
+		AnswerSheet as = new AnswerSheet(true);
 	}
 }

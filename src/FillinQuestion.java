@@ -7,13 +7,13 @@ import java.util.regex.Pattern;
 import javax.swing.*;
 public class FillinQuestion extends Question{
 	
-	public FillinQuestion(int ID, String quesDescribe) {
-		super(ID, quesDescribe);
+	public FillinQuestion(int ID, String quesDescribe, String ans) {
+		super(ID, quesDescribe, ans);
 		this.quesType = 1;
 		setupUI();
 	}
-	public FillinQuestion(int ID, String quesDescribe, String setString, String minRange, String maxRange) {
-		this(ID, quesDescribe);
+	public FillinQuestion(int ID, String quesDescribe, String ans, String setString, String minRange, String maxRange) {
+		this(ID, quesDescribe, ans);
 		if(setString.split(",").length > 1)
 			for(String s : setString.split(",")){
 				answerSet.add(s);
@@ -33,7 +33,7 @@ public class FillinQuestion extends Question{
 			jl = new JLabel(" " + (ID+1) +". " + quesDescribe, JLabel.LEFT);
 		jl.setFont(font);
 		jtf = new JTextField();
-		
+		jtf.setText(answer);
 		this.setLayout(new GridLayout(1, 2));
 		this.add(jl);
 		this.add(jtf);

@@ -14,13 +14,13 @@ public class Multi_ChoiseQuestion extends Question{
 	
 	int choisesNumber = 0;
 	JTextArea jta = new JTextArea();
-	public Multi_ChoiseQuestion(int ID, String quesDescribe) {
-		super(ID, quesDescribe);
+	public Multi_ChoiseQuestion(int ID, String quesDescribe, String ans) {
+		super(ID, quesDescribe, ans);
 		this.quesType = 3;
 		setupUI();
 	}
-	public Multi_ChoiseQuestion(int ID, String quesDescribe, String choisesString){
-		super(ID, quesDescribe);
+	public Multi_ChoiseQuestion(int ID, String quesDescribe, String ans, String choisesString){
+		super(ID, quesDescribe, ans);
 		this.quesType = 3;
 		if(choisesString.split(",").length > 1)
 			for(String s : choisesString.split(",")){
@@ -55,6 +55,18 @@ public class Multi_ChoiseQuestion extends Question{
 				this.add(remarks[i], new GBC(1,i+1,1,1).setIpad(100, 0).setWeight(0.1, 0));
 			} else {
 				this.add(jcbs[i], new GBC(0,i+1,2,1).setIpad(30, 0).setAnchor(GBC.WEST).setWeight(0, 0));
+			}
+		}
+		if(answer != "") {
+			String[] a = answer.split("\n\r");
+			for(String s : a) {
+				String ch = s.split(":")[0];
+				int anw = ch.charAt(0) - 'A';
+				jcbs[anw].setSelected(true);
+				if(s.split("_").length == 2) {
+				String statement = answer.split("_")[1];
+				remarks[anw].setText(statement);
+				}
 			}
 		}
 		this.setVisible(true);

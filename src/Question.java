@@ -19,12 +19,13 @@ public class Question extends JPanel{
 	ArrayList<String> choises = new ArrayList<String>();
 	ArrayList<String> jumps = new ArrayList<String>();
 	double minNumber = 0, maxNumber = 0;
-	public Question(int ID, String quesDescribe){
+	public Question(int ID, String quesDescribe, String ans){
 		this.ID = ID;
 		if(quesDescribe != null)
 			this.quesDescribe = quesDescribe;
 		else
 			this.quesDescribe = "";
+		this.setAnswer(ans);
 	}
 	public void setAnswer(String ans){
 		this.answer = ans;

@@ -45,7 +45,7 @@ public class CreateDateQues extends CreateQuestion{
 		confirm.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				question = new DateQuestion(belogedPage.questionNumber, fill.getText());
+				question = new DateQuestion(belogedPage.questionNumber, fill.getText(), "");
 				
 				addQuestiontoPage();
 				cancel();
