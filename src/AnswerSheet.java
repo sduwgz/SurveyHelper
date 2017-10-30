@@ -507,8 +507,9 @@ public class AnswerSheet extends JFrame{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			setDefaultCloseOperation(EXIT_ON_CLOSE);
 	    }
-	  }
+	}
 
 	public static void main(String[] args) throws Exception{
 		AnswerSheet as = new AnswerSheet(true);
