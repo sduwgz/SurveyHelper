@@ -66,7 +66,7 @@ public class AnswerSheet extends JFrame{
 	}
 	public AnswerSheet(boolean b){
 		JFileChooser jfc=new JFileChooser();
-		jfc.setCurrentDirectory(new File("d:/"));
+		jfc.setCurrentDirectory(new File("./"));
 		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		int value = jfc.showDialog(new JLabel(), "选择");
 		if(value == JFileChooser.APPROVE_OPTION) {
@@ -499,7 +499,7 @@ public class AnswerSheet extends JFrame{
 			}
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-mm-ss");//设置日期格式
 			String date = df.format(new Date());// new Date()为获取当前系统时间
-			String outFileName = "未完成问卷" + "_" + date + ".xml";
+			String outFileName = "weiwancheng" + "_" + date + ".xml";
 			XMLOperator xmlo = new XMLOperator(pageList, String.join(",", allGroup));
 			try {
 				xmlo.writer(outFileName);
